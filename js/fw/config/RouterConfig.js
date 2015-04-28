@@ -48,7 +48,7 @@
                     var defaultRouter = _.find(routes, 'isDefault');
                     if (defaultRouter) {
                         $routeProvider.otherwise({
-                            redirectTo: self.config.base + defaultRouter.when
+                            redirectTo: defaultRouter.when
                         });
                     }
 
