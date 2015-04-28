@@ -16,7 +16,7 @@
         return [{
             id: 'about',
             isDefault: false,
-            when: '/about',
+            when: 'about',
             controller: 'AboutController',
             templateUrl: features + '/about/partials/about.html'
         }];
