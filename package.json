@@ -1,0 +1,16 @@
+{
+    "version": "1.0.0",
+    "scripts": {
+        
+    },
+    "ignore": [
+        "js/bower_components/**",
+        "less/**",
+        "mock/**",
+        "biz.tar.gz"
+    ],
+    "author": "hao.zuo",
+    "contributors":[
+        "qin.wang"
+    ]
+}
