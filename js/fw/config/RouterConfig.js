@@ -49,10 +49,7 @@
                         });
                     }
 
-                    $locationProvider.html5Mode({
-                        enabled: true,
-                        requireBase: true
-                    });
+                    $locationProvider.html5Mode(false);
 
                 }
             ]);
