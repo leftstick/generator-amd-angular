@@ -1,7 +1,7 @@
 {
     "appname": "Achilles-AngularJS示例项目",
     "appalias": "seed",
-    "base": "/generator-require-angular",
+    "base": "generator-require-angular",
     "version": "1.0.0",
     "icp": "这里填写备案号",
     "protocol": "https://raw.githubusercontent.com/leftstick/generator-require-angular/master/LICENSE",
