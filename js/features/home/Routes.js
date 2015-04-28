@@ -16,7 +16,7 @@
         return [{
             id: 'home',
             isDefault: true,
-            when: '#/home',
+            when: 'home',
             controller: 'HomeController',
             templateUrl: features + '/home/partials/home.html'
         }];
