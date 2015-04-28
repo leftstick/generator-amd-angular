@@ -10,11 +10,12 @@
 (function(define) {
     'use strict';
 
-    define(['lodash'], function(_) {
+    define(['lodash', 'tpl!etc/config.json'], function(_, tpl) {
 
         var Configurator = function(features, app) {
             this.features = features;
             this.app = app;
+            this.config = JSON.parse(tpl());
         };
 
         Configurator.prototype.run = function() {
@@ -23,6 +24,8 @@
                 console.warn('No features loaded');
                 return;
             }
+
+            var self = this;
 
             var routes = _.chain(this.features)
                 .filter('routes')
@@ -45,7 +48,7 @@
                     var defaultRouter = _.find(routes, 'isDefault');
                     if (defaultRouter) {
                         $routeProvider.otherwise({
-                            redirectTo: defaultRouter.when
+                            redirectTo: self.config.base + defaultRouter.when
                         });
                     }
 

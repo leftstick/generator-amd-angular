@@ -1,7 +1,4 @@
-{
-    "when": "/demolist",
-    "method": "get",
-    "responseData": [
+[
             {
                 "subjectId": 418,
                 "subjectName": "基因芯片",
@@ -63,4 +60,3 @@
                 "indexDelta": 0.0453254
             }
         ]
-}
