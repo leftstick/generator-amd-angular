@@ -41,7 +41,7 @@
                         title: '确认',
                         content: opts.content,
                         animation: 'am-fade-and-slide-top',
-                        template: commonBase + '/ui/confirm.html'
+                        template: commonBase + '/ui/Confirm.html'
                     });
                 });
 

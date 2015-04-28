@@ -44,7 +44,7 @@
                             backdrop: 'static',
                             content: opts.content,
                             animation: 'am-fade-and-slide-top',
-                            template: commonBase + '/ui/info.html'
+                            template: commonBase + '/ui/Info.html'
                         });
                     }, 0);
                 });
