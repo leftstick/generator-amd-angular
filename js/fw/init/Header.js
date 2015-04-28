@@ -46,7 +46,7 @@
             });
             this.meta({
                 'name': 'viewport',
-                'content': 'width=device-width, initial-scale=0.25, minimum-scale=0.25, maximum-scale=1.0, user-scalable=yes, minimal-ui'
+                'content': 'width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1.0, user-scalable=yes, minimal-ui'
             });
             this.meta({
                 'name': 'renderer',
