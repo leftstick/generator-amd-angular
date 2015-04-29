@@ -38,7 +38,7 @@
 
                     events.emit('modal', {
                         scope: scope,
-                        title: '确认',
+                        title: 'Confirm',
                         content: opts.content,
                         animation: 'am-fade-and-slide-top',
                         template: commonBase + '/ui/Confirm.html'

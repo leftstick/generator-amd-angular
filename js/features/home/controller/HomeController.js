@@ -34,31 +34,31 @@
             };
 
             $scope.showSuccessNoty = function() {
-                noty('success', '这里是成功的noty');
+                noty('success', 'This is success noty');
             };
 
             $scope.showErrorNoty = function() {
-                noty('error', '这里是错误的noty');
+                noty('error', 'This is error noty');
             };
 
             $scope.showInfoNoty = function() {
-                noty('info', '这里是信息的noty');
+                noty('info', 'This is info noty');
             };
 
             $scope.showInfo = function() {
                 events.emit('info', {
-                    content: '这个就是简单的提示窗',
+                    content: 'It\'s simple info dialog',
                     onClose: function() {
-                        noty('info', '提示窗关闭了!');
+                        noty('info', 'Dialog closed!');
                     }
                 });
             };
 
             $scope.showConfirm = function() {
                 events.emit('confirm', {
-                    content: '这个是确认框',
+                    content: 'It\'s confirm dialog',
                     onConfirm: function() {
-                        noty('info', '点击确认了');
+                        noty('info', 'Confirmed!');
                     }
                 });
             };
@@ -66,7 +66,7 @@
             $scope.showCustom = function() {
                 events.emit('modal', {
                     scope: $scope,
-                    title: '自定义',
+                    title: 'It\'s custom dialog',
                     animation: 'am-fade-and-slide-top',
                     template: features + '/home/partials/custom.html'
                 });
@@ -74,7 +74,7 @@
 
             $scope.closeCustom = function($hide) {
                 $hide();
-                noty('info', '自定义modal关闭了!');
+                noty('info', 'custom modal closed!');
             };
 
             HomeService.getStates()
@@ -88,7 +88,7 @@
                 });
 
             $scope.button = {
-                radio: 'renhe'
+                radio: 'right'
             };
 
             HomeService.getDropdown()

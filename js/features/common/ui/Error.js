@@ -40,7 +40,7 @@
                     $timeout(function() {
                         events.emit('modal', {
                             scope: scope,
-                            title: '异常',
+                            title: 'Exception',
                             backdrop: 'static',
                             content: opts.content,
                             animation: 'am-fade-and-slide-top',
