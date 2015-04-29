@@ -1,16 +1,25 @@
 {
-    "version": "1.0.0",
-    "scripts": {
-        
-    },
-    "ignore": [
-        "js/bower_components/**",
-        "less/**",
-        "mock/**",
-        "biz.tar.gz"
-    ],
-    "author": "hao.zuo",
-    "contributors":[
-        "qin.wang"
-    ]
+  "name": "generator-require-angular",
+  "version": "1.0.0",
+  "description": "generator-require-angular",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/leftstick/generator-require-angular.git"
+  },
+  "bugs": {
+    "url": "https://github.com/leftstick/generator-require-angular/issues"
+  },
+  "homepage": "https://github.com/leftstick/generator-require-angular",
+  "files": [
+    "generators"
+  ],
+  "keywords": [
+    "generators"
+  ],
+  "author": "Howard.Zuo",
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "^3.7.0",
+    "yeoman-generator": "^0.19.2"
+  }
 }

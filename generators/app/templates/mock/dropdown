@@ -1,0 +1,19 @@
+[
+    {
+        "text": "<i class=\"fa fa-download\"></i>&nbsp;Click here",
+        "href": "http://www.baidu.com",
+        "target": "_blank"
+    },
+    {
+        "text": "<i class=\"fa fa-external-link\"></i>&nbsp;External link",
+        "href": "＃",
+        "target": "_self"
+    },
+    {
+        "divider": true
+    },
+    {
+        "text": "Text Button",
+        "href": "#"
+    }
+]

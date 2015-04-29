@@ -1,0 +1,37 @@
+{
+  "name": "<%= answers.name %>",
+  "version": "1.0.0",
+  "authors": [
+    "<%= answers.username %> <% if(answers.email){ %><<%= answers.email %>><% } %>"
+  ],
+  "description": "<%= answers.description %>",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "requirejs": "~2.1.17",
+    "angular": "~1.3.15",
+    "angular-route": "~1.3.15",
+    "angular-animate": "~1.3.15",
+    "lodash": "~3.7.0",
+    "requirejs-tpl": "*",
+    "require-css": "~0.1.8",
+    "bootstrap": "~3.3.4",
+    "angular-strap": "~2.2.1",
+    "noty": "~2.3.5",
+    "animate.css": "~3.2.6",
+    "angular-motion": "~0.3.4",
+    "angular-theme-spinner": "~1.1.0",
+    "splash-screen": "~2.1.0",
+    "jquery": "~2.1.3",
+    "angular-sanitize": "~1.3.15",
+    "angular-loading-bar": "~0.7.1",
+    "fontawesome": "~4.3.0",
+    "angular-smart-table": "~2.0.2",
+    "bootstrap-additions": "~0.2.3"
+  }
+}
