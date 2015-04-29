@@ -94,9 +94,13 @@ var gen = generators.Base.extend({
     },
     install: function() {
         var done = this.async();
-        console.log(this.destinationRoot() + '/' + this.answers.name);
-        this.destinationRoot(this.destinationRoot() + '/' + this.answers.name);
-        this.bowerInstall('', done);
+        var path = require('path');
+        process.chdir(path.join(this.destinationRoot(), this.answers.name));
+        this.spawnCommand('bower', ['install'], {
+            cwd: path.join(this.destinationRoot(), this.answers.name)
+        }, function(){
+            done();
+        });
     },
     end: function() {
         this.log.ok('Project ' + this.answers.name + ' generated!!!');
