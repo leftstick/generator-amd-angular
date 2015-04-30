@@ -95,7 +95,7 @@ var gen = generators.Base.extend({
         self.directory(self.templatePath('less'), self.destinationPath('/less'));
         self.directory(self.templatePath('mock'), self.destinationPath('/mock'));
         self.copy(self.templatePath('.bowerrc'), self.destinationPath('/.bowerrc'));
-        self.copy(self.templatePath('.gitignore'), self.destinationPath('/.gitignore'));
+        self.copy(self.templatePath('gitignore'), self.destinationPath('/.gitignore'));
         self.copy(self.templatePath('.jshintrc'), self.destinationPath('/.jshintrc'));
         self.fs.copyTpl(self.templatePath('bower.json'), self.destinationPath('/bower.json'), self.obj);
         self.copy(self.templatePath('favicon.ico'), self.destinationPath('/favicon.ico'));
