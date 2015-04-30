@@ -1,4 +1,4 @@
-# generator-require-angular ![](http://img.shields.io/badge/bower_module-v1.0.0-green.svg) #
+# generator-require-angular ![](http://img.shields.io/badge/bower_module-v1.0.1-green.svg) #
 ==================
 
 Yeoman generator for requirejs + angularjs
