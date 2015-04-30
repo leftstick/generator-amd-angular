@@ -3,8 +3,8 @@
  *
  *   Defines a home feature
  *
- *  @author  Howard.Zuo
- *  @date    Apr 28th, 2015
+ *  @author  <%= answers.username %>
+ *  @date    <%= answers.date %>
  *
  * ******************************************************************************************************
  */

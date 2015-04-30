@@ -3,8 +3,8 @@
  *  you have different stuff for each env
  *
  *
- *  @author  Howard.Zuo
- *  @date    Apr 28th, 2014
+ *  @author  <%= answers.username %>
+ *  @date    <%= answers.date %>
  *
  */
 (function(define) {

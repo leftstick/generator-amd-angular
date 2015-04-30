@@ -4,8 +4,8 @@
  *  control EVENT system
  *
  *
- *  @author  Hao.Zuo
- *  @date    Apr 28th, 2015
+ *  @author  <%= answers.username %>
+ *  @date    <%= answers.date %>
  *
  */
 (function(define) {

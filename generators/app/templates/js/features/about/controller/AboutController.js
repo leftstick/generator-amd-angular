@@ -1,14 +1,12 @@
 /**
  *  Defines the AboutController controller
  *
- *  @author  Howard.Zuo
- *  @date    Apr 28th, 2015
+ *  @author  <%= answers.username %>
+ *  @date    <%= answers.date %>
  *
  */
 (function(define) {
     'use strict';
-    /* jshint -W100 */
-
     /**
      * Register the AboutController class with RequireJS
      */
@@ -17,7 +15,7 @@
         /**
          * @constructor
          */
-        var AboutController = function($scope, AboutService) {
+        var AboutController = function($scope, AboutService, events) {
 
 
             $scope.showSpinner = true;
@@ -27,14 +25,16 @@
                     $scope.showSpinner = false;
                     $scope.originDemolist = data;
                     $scope.demolist = [].concat($scope.originDemolist);
-                }).error(function() {
-                    alert('sdfsf');
+                }).error(function(err) {
+                    events.emit('error', {
+                        content: err
+                    });
                 });
 
             $scope.$on('$destroy', function() {});
         };
 
-        return ['$scope', 'AboutService', AboutController];
+        return ['$scope', 'AboutService', 'events', AboutController];
 
     });
 

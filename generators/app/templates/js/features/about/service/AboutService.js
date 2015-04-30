@@ -1,8 +1,8 @@
 /**
  *  Defines the AboutService
  *
- *  @author  Howard.Zuo
- *  @date    Apr 15th, 2015
+ *  @author  <%= answers.username %>
+ *  @date    <%= answers.date %>
  *
  */
 (function(define) {

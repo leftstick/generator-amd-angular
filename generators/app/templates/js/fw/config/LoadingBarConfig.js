@@ -2,8 +2,8 @@
  *  LoadingBarConfig turn on the loading indicator function.
  *
  *
- *  @author  Howard.Zuo
- *  @date    Apr 28th, 2015
+ *  @author  <%= answers.username %>
+ *  @date    <%= answers.date %>
  *
  */
 (function(define) {

@@ -2,8 +2,9 @@
  * System config
  * define all paths, this is the main entrance of the app.
  *
- *  @author  Howard.Zuo
- *  @date    Apr 27th, 2015
+ *  @author  <%= answers.username %>
+ *  @date    <%= answers.date %>
+ *
  */
 (function(require) {
     'use strict';

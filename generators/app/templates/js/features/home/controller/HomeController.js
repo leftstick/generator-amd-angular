@@ -1,8 +1,8 @@
 /**
  *  Defines the HomeController controller
  *
- *  @author  Hao.Zuo
- *  @date    Mar 25th, 2015
+ *  @author  <%= answers.username %>
+ *  @date    <%= answers.date %>
  *
  */
 (function(define) {
@@ -50,6 +50,15 @@
                     content: 'It\'s simple info dialog',
                     onClose: function() {
                         noty('info', 'Dialog closed!');
+                    }
+                });
+            };
+
+            $scope.showError = function() {
+                events.emit('error', {
+                    content: 'It\'s error dialog',
+                    onClose: function() {
+                        noty('info', 'Error Dialog closed!');
                     }
                 });
             };

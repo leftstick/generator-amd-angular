@@ -3,8 +3,8 @@
  *  Defines `utils` service
  *
  *
- *  @author  Howard.Zuo
- *  @date    Apr 28th, 2015
+ *  @author  <%= answers.username %>
+ *  @date    <%= answers.date %>
  *
  */
 (function(define, global) {
@@ -89,10 +89,14 @@
                 };
 
                 this.getapi = function(path) {
-                    if (_.endsWith(CONF.api, '/')) {
-                        return CONF.api + path.substring(1);
+                    var newPath = path;
+                    if(_.startsWith(path, '/')){
+                        newPath = path.substring(1);
                     }
-                    return CONF.api + '/' + path;
+                    if (_.endsWith(CONF.api, '/')) {
+                        return CONF.api + newPath;
+                    }
+                    return CONF.api + '/' + newPath;
                 };
 
                 this.supportCanvas = !!($window.FileReader && $window.CanvasRenderingContext2D);

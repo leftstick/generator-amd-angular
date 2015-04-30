@@ -57,7 +57,9 @@ var gen = generators.Base.extend({
             message: 'Use html5 mode?',
             default: true
         }], function(answers) {
+            require('date-util');
             this.answers = answers;
+            this.answers.date = new Date().format('mmm d, yyyy');
             this.obj = {
                 answers: this.answers
             };

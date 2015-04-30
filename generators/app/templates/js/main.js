@@ -1,8 +1,9 @@
 /**
  *  main.js is responsible for the organization of features and cache control.
  *
- *  @author  Hao.Zuo
- *  @date    Apr 28th, 2015
+ *  @author  <%= answers.username %>
+ *  @date    <%= answers.date %>
+ *
  */
 (function(define, require, doc) {
     'use strict';

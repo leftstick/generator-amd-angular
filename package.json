@@ -19,6 +19,7 @@
   "author": "Howard.Zuo",
   "license": "MIT",
   "dependencies": {
+    "date-util": "^1.2.1",
     "lodash": "^3.7.0",
     "yeoman-generator": "^0.19.2"
   }

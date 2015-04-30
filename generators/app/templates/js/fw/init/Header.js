@@ -2,8 +2,8 @@
  *  HeadInit set all needed head info to the index.html.
  *
  *
- *  @author  Hao.Zuo
- *  @date    Apr 28th, 2015
+ *  @author  <%= answers.username %>
+ *  @date    <%= answers.date %>
  *
  */
 (function(define, global) {
