@@ -64,43 +64,44 @@ var gen = generators.Base.extend({
             done();
         }.bind(this));
     },
-    writing: function() {
-        var done = this.async();
+    configuring: function() {
+        var path = require('path');
         var fs = require('fs');
         var self = this;
-        var _ = require('lodash');
+        var done = this.async();
         fs.mkdir(this.destinationPath(this.answers.name), function(err) {
             if (err) {
                 self.log.error(err.toString());
                 process.exit(1);
             }
-            self.fs.copyTpl(self.templatePath('etc/config.json'), self.destinationPath(self.answers.name + '/etc/config.json'), self.obj);
-            self.copy(self.templatePath('img/logo.png'), self.destinationPath(self.answers.name + '/img/logo.png'));
-            self.directory(self.templatePath('js'), self.destinationPath(self.answers.name + '/js'), function(body) {
-                return _.template(body, {
-                    interpolate: /<%=([\s\S]+?)%>/g
-                })(self.obj);
-            });
-            self.directory(self.templatePath('less'), self.destinationPath(self.answers.name + '/less'));
-            self.directory(self.templatePath('mock'), self.destinationPath(self.answers.name + '/mock'));
-            self.copy(self.templatePath('.bowerrc'), self.destinationPath(self.answers.name + '/.bowerrc'));
-            self.copy(self.templatePath('.gitignore'), self.destinationPath(self.answers.name + '/.gitignore'));
-            self.copy(self.templatePath('.jshintrc'), self.destinationPath(self.answers.name + '/.jshintrc'));
-            self.fs.copyTpl(self.templatePath('bower.json'), self.destinationPath(self.answers.name + '/bower.json'), self.obj);
-            self.copy(self.templatePath('favicon.ico'), self.destinationPath(self.answers.name + '/favicon.ico'));
-            self.copy(self.templatePath('index.html'), self.destinationPath(self.answers.name + '/index.html'));
+            self.destinationRoot(path.join(self.destinationRoot(), self.answers.name));
             done();
         });
     },
-    install: function() {
+    writing: function() {
         var done = this.async();
-        var path = require('path');
-        process.chdir(path.join(this.destinationRoot(), this.answers.name));
-        this.spawnCommand('bower', ['install'], {
-            cwd: path.join(this.destinationRoot(), this.answers.name)
-        }, function(){
-            done();
+        var self = this;
+        var _ = require('lodash');
+
+        self.fs.copyTpl(self.templatePath('etc/config.json'), self.destinationPath('/etc/config.json'), self.obj);
+        self.copy(self.templatePath('img/logo.png'), self.destinationPath('/img/logo.png'));
+        self.directory(self.templatePath('js'), self.destinationPath('/js'), function(body) {
+            return _.template(body, {
+                interpolate: /<%=([\s\S]+?)%>/g
+            })(self.obj);
         });
+        self.directory(self.templatePath('less'), self.destinationPath('/less'));
+        self.directory(self.templatePath('mock'), self.destinationPath('/mock'));
+        self.copy(self.templatePath('.bowerrc'), self.destinationPath('/.bowerrc'));
+        self.copy(self.templatePath('.gitignore'), self.destinationPath('/.gitignore'));
+        self.copy(self.templatePath('.jshintrc'), self.destinationPath('/.jshintrc'));
+        self.fs.copyTpl(self.templatePath('bower.json'), self.destinationPath('/bower.json'), self.obj);
+        self.copy(self.templatePath('favicon.ico'), self.destinationPath('/favicon.ico'));
+        self.copy(self.templatePath('index.html'), self.destinationPath('/index.html'));
+        done();
+    },
+    install: function() {
+        this.bowerInstall();
     },
     end: function() {
         this.log.ok('Project ' + this.answers.name + ' generated!!!');

@@ -11,9 +11,10 @@
     define(['angular', 'jquery', 'tpl!common/ui/Footer.html', 'tpl!etc/config.json'], function(angular, $, tpl, config) {
 
         var Feature = function() {
+            this.export = 'FooterModule';
             this.config = JSON.parse(config());
             this.$body = $('body');
-            this.mod = angular.module('FooterModule', []);
+            this.mod = angular.module(this.export, []);
         };
 
         Feature.prototype.beforeStart = function() {
