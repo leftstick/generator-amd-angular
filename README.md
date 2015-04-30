@@ -3,6 +3,8 @@
 
 Yeoman generator for requirejs + angularjs
 
+> You can view the online demo at: [http://leftstick.github.io/generator-require-angular](http://leftstick.github.io/generator-require-angular)
+
 ## Usage ##
 
 Install `yo`: `npm install -g yo`
