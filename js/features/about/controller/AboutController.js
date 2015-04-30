@@ -2,13 +2,11 @@
  *  Defines the AboutController controller
  *
  *  @author  Howard.Zuo
- *  @date    Apr 28th, 2015
+ *  @date    Apr 30th, 2015
  *
  */
 (function(define) {
     'use strict';
-    /* jshint -W100 */
-
     /**
      * Register the AboutController class with RequireJS
      */
@@ -17,7 +15,7 @@
         /**
          * @constructor
          */
-        var AboutController = function($scope, AboutService) {
+        var AboutController = function($scope, AboutService, events) {
 
 
             $scope.showSpinner = true;
@@ -28,13 +26,15 @@
                     $scope.originDemolist = data;
                     $scope.demolist = [].concat($scope.originDemolist);
                 }).error(function() {
-                    alert('sdfsf');
+                    events.emit('error', {
+                        content: err
+                    });
                 });
 
             $scope.$on('$destroy', function() {});
         };
 
-        return ['$scope', 'AboutService', AboutController];
+        return ['$scope', 'AboutService', 'events', AboutController];
 
     });
 

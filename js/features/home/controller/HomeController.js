@@ -54,6 +54,15 @@
                 });
             };
 
+            $scope.showError = function() {
+                events.emit('error', {
+                    content: 'It\'s error dialog',
+                    onClose: function() {
+                        noty('info', 'Error Dialog closed!');
+                    }
+                });
+            };
+
             $scope.showConfirm = function() {
                 events.emit('confirm', {
                     content: 'It\'s confirm dialog',
