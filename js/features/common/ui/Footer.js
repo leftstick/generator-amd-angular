@@ -25,6 +25,7 @@
             var self = this;
             this.mod.controller('FooterCtrl', ['$scope', function($scope) {
                 $scope.config = self.config;
+                console.log($scope.config);
             }]);
         };
 

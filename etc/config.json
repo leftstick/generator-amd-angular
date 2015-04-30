@@ -1,6 +1,5 @@
 {
     "appname": "Achilles-AngularJS Seed Project",
-    "appalias": "seed",
     "base": "generator-require-angular",
     "version": "1.0.0",
     "icp": "ICP here",
