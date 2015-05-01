@@ -10,43 +10,44 @@
 
     var commonBase = requirejs.toUrl('common');
 
-    define(['angular'], function(angular) {
+    define(['fw/lib/FeatureBase'], function(Base) {
 
-        var Feature = function() {
-            this.export = 'ConfirmModal';
-            this.mod = angular.module(this.export, []);
-        };
+        var Feature = Base.extend(function() {
 
-        Feature.prototype.beforeStart = function() {};
+            this.initializer = function() {
+                this.super.initializer('ConfirmModal');
+            };
 
-        Feature.prototype.run = function() {
-            this.mod.run(['events', '$timeout', '$rootScope', function(events, $timeout, $rootScope) {
+            this.run = function() {
+                this.mod.run(['events', '$timeout', '$rootScope', function(events, $timeout, $rootScope) {
 
-                events.on('confirm', function(opts) {
-                    if (!opts) {
-                        return;
-                    }
-
-                    var scope = $rootScope.$new();
-
-                    scope.confirm = function($hide) {
-                        $hide();
-                        if (angular.isFunction(opts.onConfirm)) {
-                            opts.onConfirm();
+                    events.on('confirm', function(opts) {
+                        if (!opts) {
+                            return;
                         }
-                    };
 
-                    events.emit('modal', {
-                        scope: scope,
-                        title: 'Confirm',
-                        content: opts.content,
-                        animation: 'am-fade-and-slide-top',
-                        template: commonBase + '/ui/Confirm.html'
+                        var scope = $rootScope.$new();
+
+                        scope.confirm = function($hide) {
+                            $hide();
+                            if (angular.isFunction(opts.onConfirm)) {
+                                opts.onConfirm();
+                            }
+                        };
+
+                        events.emit('modal', {
+                            scope: scope,
+                            title: 'Confirm',
+                            content: opts.content,
+                            animation: 'am-fade-and-slide-top',
+                            template: commonBase + '/ui/Confirm.html'
+                        });
                     });
-                });
 
-            }]);
-        };
+                }]);
+            };
+
+        });
 
         return Feature;
 

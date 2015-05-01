@@ -27,6 +27,7 @@
 
             'jquery': 'bower/jquery/dist/jquery.min',
             'lodash': 'bower/lodash/lodash.min',
+            'extend': 'bower/extend.js/bin/extend.min',
 
             'angular': 'bower/angular/angular.min',
             'angular-animate': 'bower/angular-animate/angular-animate.min',

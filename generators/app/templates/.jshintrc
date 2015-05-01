@@ -11,7 +11,8 @@
         "process": true,
         "jQuery": true,
         "module": true,
-        "alert": true
+        "alert": true,
+        "Class": true
     },
     "globalstrict": true,
     "quotmark": true,

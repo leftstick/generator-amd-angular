@@ -11,45 +11,48 @@
 (function(define) {
     'use strict';
 
-    define(['angular', 'lodash'], function(angular, _) {
+    define(['fw/lib/ServiceBase', 'angular', 'lodash'], function(Base, angular, _) {
 
-        var Service = function(features, app) {
-            this.features = features;
-            this.app = app;
-        };
+        var Service = Base.extend(function() {
 
-        Service.prototype.run = function() {
+            this.constructor = function(features, app) {
+                this.super(features, app);
+            };
 
-            this.app.factory('events', ['$rootScope', function($rootScope) {
-                var factory = {};
+            this.run = function() {
+                this.super.run();
+                this.app.factory('events', ['$rootScope', function($rootScope) {
+                    var factory = {};
 
-                var listeners = {};
+                    var listeners = {};
 
-                factory.emit = function(eventName, data) {
-                    if (!eventName) {
-                        return;
-                    }
-                    $rootScope.$broadcast(eventName, data);
-                };
+                    factory.emit = function(eventName, data) {
+                        if (!eventName) {
+                            return;
+                        }
+                        $rootScope.$broadcast(eventName, data);
+                    };
 
-                factory.on = function(eventName, callback) {
-                    if (!listeners[eventName]) {
-                        listeners[eventName] = [];
-                        $rootScope.$on(eventName, function(event, data) {
-                            _.each(listeners[eventName], function(listener) {
-                                listener(data);
+                    factory.on = function(eventName, callback) {
+                        if (!listeners[eventName]) {
+                            listeners[eventName] = [];
+                            $rootScope.$on(eventName, function(event, data) {
+                                _.each(listeners[eventName], function(listener) {
+                                    listener(data);
+                                });
                             });
-                        });
 
-                    }
-                    if (angular.isFunction(callback)) {
-                        listeners[eventName].push(callback);
-                    }
-                };
+                        }
+                        if (angular.isFunction(callback)) {
+                            listeners[eventName].push(callback);
+                        }
+                    };
 
-                return factory;
-            }]);
-        };
+                    return factory;
+                }]);
+            };
+
+        });
 
         return Service;
 

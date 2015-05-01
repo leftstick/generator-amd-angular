@@ -10,47 +10,47 @@
 
     var commonBase = requirejs.toUrl('common');
 
-    define(['angular'], function(angular) {
+    define(['fw/lib/FeatureBase', 'angular'], function(Base, angular) {
 
-        var Feature = function() {
-            this.export = 'ErrorModal';
-            this.mod = angular.module(this.export, []);
-        };
+        var Feature = Base.extend(function() {
 
-        Feature.prototype.beforeStart = function() {};
+            this.initializer = function() {
+                this.super.initializer('ErrorModal');
+            };
 
-        Feature.prototype.run = function() {
+            this.run = function() {
+                this.mod.run(['events', '$timeout', '$rootScope', function(events, $timeout, $rootScope) {
 
-            this.mod.run(['events', '$timeout', '$rootScope', function(events, $timeout, $rootScope) {
-
-                events.on('error', function(opts) {
-                    if (!opts) {
-                        return;
-                    }
-
-                    var scope = $rootScope.$new();
-
-                    scope.close = function($hide) {
-                        $hide();
-                        if (angular.isFunction(opts.onClose)) {
-                            opts.onClose();
+                    events.on('error', function(opts) {
+                        if (!opts) {
+                            return;
                         }
-                    };
 
-                    $timeout(function() {
-                        events.emit('modal', {
-                            scope: scope,
-                            title: 'Exception',
-                            backdrop: 'static',
-                            content: opts.content,
-                            animation: 'am-fade-and-slide-top',
-                            template: commonBase + '/ui/Error.html'
-                        });
-                    }, 0);
-                });
+                        var scope = $rootScope.$new();
 
-            }]);
-        };
+                        scope.close = function($hide) {
+                            $hide();
+                            if (angular.isFunction(opts.onClose)) {
+                                opts.onClose();
+                            }
+                        };
+
+                        $timeout(function() {
+                            events.emit('modal', {
+                                scope: scope,
+                                title: 'Exception',
+                                backdrop: 'static',
+                                content: opts.content,
+                                animation: 'am-fade-and-slide-top',
+                                template: commonBase + '/ui/Error.html'
+                            });
+                        }, 0);
+                    });
+
+                }]);
+            };
+
+        });
 
         return Feature;
 

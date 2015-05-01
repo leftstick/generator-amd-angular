@@ -10,17 +10,19 @@
 (function(define) {
     'use strict';
 
-    define(['tpl!etc/config.json'], function(tpl) {
+    define(['fw/lib/ConfiguratorBase', 'tpl!etc/config.json'], function(Base, tpl) {
 
-        var Configurator = function(features, app) {
-            this.config = JSON.parse(tpl());
-            this.features = features;
-            this.app = app;
-        };
+        var Configurator = Base.extend(function() {
+            this.constructor = function(features, app) {
+                this.super(features, app);
+                this.config = JSON.parse(tpl());
+            };
 
-        Configurator.prototype.run = function() {
-            this.app.constant('CONF', this.config);
-        };
+            this.run = function() {
+                this.super.run();
+                this.app.constant('CONF', this.config);
+            };
+        });
 
         return Configurator;
 

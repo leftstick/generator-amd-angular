@@ -12,27 +12,31 @@
     'use strict';
 
     define([
-        'angular',
+        'fw/lib/FeatureBase',
         './Routes',
         './controller/HomeController',
         './service/HomeService'
-    ], function(angular,
+    ], function(Base,
         Routes,
         HomeController,
         HomeService) {
 
-        var Feature = function() {
-            this.export = 'home';
-            this.routes = Routes;
-            this.mod = angular.module(this.export, []);
-        };
+        var Feature = Base.extend(function() {
 
-        Feature.prototype.beforeStart = function() {};
+            this.initializer = function() {
+                this.super.initializer('home');
+            };
 
-        Feature.prototype.run = function() {
-            this.mod.controller('HomeController', HomeController);
-            this.mod.service('HomeService', HomeService);
-        };
+            this.constructor = function() {
+                this.routes = Routes;
+            };
+
+            this.run = function() {
+                this.mod.controller('HomeController', HomeController);
+                this.mod.service('HomeService', HomeService);
+            };
+
+        });
 
         return Feature;
 

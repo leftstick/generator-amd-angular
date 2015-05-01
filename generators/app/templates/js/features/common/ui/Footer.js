@@ -8,25 +8,30 @@
 (function(define) {
     'use strict';
 
-    define(['angular', 'jquery', 'tpl!common/ui/Footer.html', 'tpl!etc/config.json'], function(angular, $, tpl, config) {
+    define(['fw/lib/FeatureBase', 'jquery', 'tpl!common/ui/Footer.html', 'tpl!etc/config.json'], function(Base, $, tpl, config) {
 
-        var Feature = function() {
-            this.export = 'FooterModule';
-            this.config = JSON.parse(config());
-            this.$body = $('body');
-            this.mod = angular.module(this.export, []);
-        };
+        var Feature = Base.extend(function() {
 
-        Feature.prototype.beforeStart = function() {
-            this.$body.append(tpl());
-        };
+            this.initializer = function() {
+                this.super.initializer('FooterModule');
+            };
 
-        Feature.prototype.run = function() {
-            var self = this;
-            this.mod.controller('FooterCtrl', ['$scope', function($scope) {
-                $scope.config = self.config;
-            }]);
-        };
+            this.constructor = function() {
+                this.config = JSON.parse(config());
+                this.$body = $('body');
+            };
+
+            this.beforeStart = function() {
+                this.$body.append(tpl());
+            };
+
+            this.run = function() {
+                var self = this;
+                this.mod.controller('FooterCtrl', ['$scope', function($scope) {
+                    $scope.config = self.config;
+                }]);
+            };
+        });
 
         return Feature;
 

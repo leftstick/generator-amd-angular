@@ -8,7 +8,7 @@
 (function(define) {
     'use strict';
 
-    define(['angular', 'lodash'], function(angular, _) {
+    define(['fw/lib/FeatureBase', 'lodash'], function(Base, _) {
 
         var defaults = {
             animation: 'am-fade',
@@ -26,25 +26,25 @@
             id: ''
         };
 
-        var Feature = function() {
-            this.export = 'ModalWrapper';
-            this.mod = angular.module(this.export, []);
-        };
+        var Feature = Base.extend(function() {
 
-        Feature.prototype.beforeStart = function() {};
+            this.initializer = function() {
+                this.super.initializer('ModalWrapper');
+            };
 
-        Feature.prototype.run = function() {
+            this.run = function() {
+                this.mod.run(['events', '$modal', function(events, $modal) {
 
-            this.mod.run(['events', '$modal', function(events, $modal) {
+                    events.on('modal', function(opts) {
+                        var options = _.defaults(opts, defaults);
+                        options.title = opts.title;
+                        $modal(options);
+                    });
 
-                events.on('modal', function(opts) {
-                    var options = _.defaults(opts, defaults);
-                    options.title = opts.title;
-                    $modal(options);
-                });
+                }]);
+            };
 
-            }]);
-        };
+        });
 
         return Feature;
 

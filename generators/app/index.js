@@ -71,9 +71,9 @@ var gen = generators.Base.extend({
         var fs = require('fs');
         var self = this;
         var done = this.async();
-        fs.mkdir(this.destinationPath(this.answers.name), function(err) {
-            if (err) {
-                self.log.error(err.toString());
+        fs.exists(this.destinationPath(this.answers.name), function(exists) {
+            if (exists && fs.statSync(self.destinationPath(self.answers.name)).isDirectory()) {
+                self.log.error('Directory [' + self.answers.name + '] exists');
                 process.exit(1);
             }
             self.destinationRoot(path.join(self.destinationRoot(), self.answers.name));
@@ -81,7 +81,6 @@ var gen = generators.Base.extend({
         });
     },
     writing: function() {
-        var done = this.async();
         var self = this;
         var _ = require('lodash');
 
@@ -100,7 +99,6 @@ var gen = generators.Base.extend({
         self.fs.copyTpl(self.templatePath('bower.json'), self.destinationPath('/bower.json'), self.obj);
         self.copy(self.templatePath('favicon.ico'), self.destinationPath('/favicon.ico'));
         self.copy(self.templatePath('index.html'), self.destinationPath('/index.html'));
-        done();
     },
     install: function() {
         this.bowerInstall();

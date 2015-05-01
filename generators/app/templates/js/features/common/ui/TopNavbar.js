@@ -8,20 +8,22 @@
 (function(define) {
     'use strict';
 
-    define(['angular', 'jquery', 'tpl!common/ui/TopNavbar.html'], function(angular, $, tpl) {
+    define(['fw/lib/FeatureBase', 'jquery', 'tpl!common/ui/TopNavbar.html'], function(Base, $, tpl) {
 
-        var Feature = function() {
-            this.$body = $('body');
-        };
+        var Feature = Base.extend(function() {
 
-        Feature.prototype.beforeStart = function() {
-            this.$body.prepend(tpl());
-        };
+            this.initializer = function() {};
 
-        Feature.prototype.run = function() {};
+            this.constructor = function() {
+                this.$body = $('body');
+            };
+
+            this.beforeStart = function() {
+                this.$body.prepend(tpl());
+            };
+        });
 
         return Feature;
-
     });
 
 })(define);

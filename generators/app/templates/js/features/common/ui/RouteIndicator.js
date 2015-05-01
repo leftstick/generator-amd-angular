@@ -9,31 +9,34 @@
 (function(define) {
     'use strict';
 
-    define(['angular', 'lodash', 'jquery'], function(angular, _, $) {
+    define(['fw/lib/FeatureBase', 'lodash', 'jquery'], function(Base, _, $) {
 
-        var Feature = function() {
-            this.export = 'RouteIndicator';
-            this.mod = angular.module(this.export, []);
-            this.$body = $('body');
-        };
+        var Feature = Base.extend(function() {
 
-        Feature.prototype.beforeStart = function() {};
+            this.initializer = function() {
+                this.super.initializer('RouteIndicator');
+            };
 
-        Feature.prototype.run = function() {
+            this.constructor = function() {
+                this.$body = $('body');
+            };
 
-            var self = this;
-            this.mod.run(['$rootScope', 'Routes',
-                function($rootScope, Routes) {
-                    var classes = _.pluck(Routes, 'id').join(' ');
-                    $rootScope.$on('$routeChangeSuccess', function(e, route) {
-                        self.$body.removeClass(classes);
-                        if (route && route.$$route && route.$$route.id) {
-                            self.$body.addClass(route.$$route.id);
-                        }
-                    });
-                }
-            ]);
-        };
+            this.run = function() {
+                var self = this;
+                this.mod.run(['$rootScope', 'Routes',
+                    function($rootScope, Routes) {
+                        var classes = _.pluck(Routes, 'id').join(' ');
+                        $rootScope.$on('$routeChangeSuccess', function(e, route) {
+                            self.$body.removeClass(classes);
+                            if (route && route.$$route && route.$$route.id) {
+                                self.$body.addClass(route.$$route.id);
+                            }
+                        });
+                    }
+                ]);
+            };
+
+        });
 
         return Feature;
 

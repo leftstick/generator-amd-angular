@@ -12,30 +12,33 @@
     'use strict';
 
     define([
-        'angular',
+        'fw/lib/FeatureBase',
         './Routes',
         './controller/AboutController',
         './service/AboutService'
-    ], function(angular,
+    ], function(Base,
         Routes,
         AboutController,
         AboutService) {
 
-        var Feature = function() {
-            this.export = 'about';
-            this.routes = Routes;
-            this.mod = angular.module(this.export, []);
-        };
+        var Feature = Base.extend(function() {
 
-        Feature.prototype.beforeStart = function() {};
+            this.initializer = function() {
+                this.super.initializer('about');
+            };
 
-        Feature.prototype.run = function() {
-            this.mod.controller('AboutController', AboutController);
-            this.mod.service('AboutService', AboutService);
-        };
+            this.constructor = function() {
+                this.routes = Routes;
+            };
+
+            this.run = function() {
+                this.mod.controller('AboutController', AboutController);
+                this.mod.service('AboutService', AboutService);
+            };
+
+        });
 
         return Feature;
-
     });
 
 }(define));

@@ -8,7 +8,7 @@
 (function(define, global) {
     'use strict';
 
-    define(['angular'], function(angular) {
+    define(['fw/lib/FeatureBase'], function(Base) {
 
         var TYPES = {
             alert: 'alert',
@@ -60,62 +60,60 @@
             confirm: 'flipOutX'
         };
 
-        var Feature = function() {
-            this.export = 'Alerts';
-            this.mod = angular.module(this.export, []);
-        };
+        var Feature = Base.extend(function() {
 
-        Feature.prototype.beforeStart = function() {};
+            this.initializer = function() {
+                this.super.initializer('Alerts');
+            };
 
-        Feature.prototype.run = function() {
+            this.run = function() {
+                this.mod.run(['events',
+                    function(events) {
 
-            this.mod.run(['events',
-                function(events) {
-
-                    events.on('alert', function(data) {
-                        global.noty({
-                            layout: LAYOUTS[data.type],
-                            text: data.message,
-                            type: TYPES[data.type],
-                            animation: {
-                                open: 'animated ' + ANIMATIONS_IN[data.type], // Animate.css class names
-                                close: 'animated ' + ANIMATIONS_OUT[data.type], // Animate.css class names
-                                easing: 'swing', // unavailable - no need
-                                speed: 500 // unavailable - no need
-                            },
-                            timeout: TIMEOUTS[data.type],
-                            dismissQueue: true,
-                            maxVisible: 6,
-                            closeWith: ['click'], // ['click', 'button', 'hover', 'backdrop'] // backdrop click will close all notifications
-                            callback: {
-                                onShow: data.onShow || angular.noop,
-                                afterShow: data.afterShow || angular.noop,
-                                onClose: data.onClose || angular.noop,
-                                afterClose: data.afterClose || angular.noop,
-                                onCloseClick: data.onCloseClick || angular.noop,
-                            },
-                            buttons: (data.type !== 'confirm') ? false : [{
-                                addClass: 'btn btn-primary',
-                                text: '确定',
-                                onClick: function($noty) {
-                                    $noty.close();
-                                    (data.onOkClick || angular.noop)();
-                                }
-                            }, {
-                                addClass: 'btn btn-danger',
-                                text: '取消',
-                                onClick: function($noty) {
-                                    $noty.close();
-                                    (data.onCancelClick || angular.noop)();
-                                }
-                            }]
+                        events.on('alert', function(data) {
+                            global.noty({
+                                layout: LAYOUTS[data.type],
+                                text: data.message,
+                                type: TYPES[data.type],
+                                animation: {
+                                    open: 'animated ' + ANIMATIONS_IN[data.type], // Animate.css class names
+                                    close: 'animated ' + ANIMATIONS_OUT[data.type], // Animate.css class names
+                                    easing: 'swing', // unavailable - no need
+                                    speed: 500 // unavailable - no need
+                                },
+                                timeout: TIMEOUTS[data.type],
+                                dismissQueue: true,
+                                maxVisible: 6,
+                                closeWith: ['click'], // ['click', 'button', 'hover', 'backdrop'] // backdrop click will close all notifications
+                                callback: {
+                                    onShow: data.onShow || angular.noop,
+                                    afterShow: data.afterShow || angular.noop,
+                                    onClose: data.onClose || angular.noop,
+                                    afterClose: data.afterClose || angular.noop,
+                                    onCloseClick: data.onCloseClick || angular.noop,
+                                },
+                                buttons: (data.type !== 'confirm') ? false : [{
+                                    addClass: 'btn btn-primary',
+                                    text: '确定',
+                                    onClick: function($noty) {
+                                        $noty.close();
+                                        (data.onOkClick || angular.noop)();
+                                    }
+                                }, {
+                                    addClass: 'btn btn-danger',
+                                    text: '取消',
+                                    onClick: function($noty) {
+                                        $noty.close();
+                                        (data.onCancelClick || angular.noop)();
+                                    }
+                                }]
+                            });
                         });
+                    }
+                ]);
+            };
 
-                    });
-
-                }
-            ]);
-        };
+        });
 
         return Feature;
 
