@@ -1,6 +1,8 @@
-# generator-require-angular #
+generator-require-angular
 ==================
-[![NPM version][npm-image]][npm-url] ![][david-url]
+
+[![NPM version][npm-image]][npm-url]
+![][david-url]
 
 Yeoman generator for requirejs + angularjs
 
