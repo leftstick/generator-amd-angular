@@ -6,19 +6,17 @@
  *  @date    <%= answers.date %>
  *
  */
-(function(define, require) {
+(function(define) {
     'use strict';
 
-    var features = require.toUrl('features');
-
-    define([], function() {
+    define(['tpl!./partials/about.html'], function(tpl) {
         return [{
             id: 'about',
             isDefault: false,
             when: '/about',
             controller: 'AboutController',
-            templateUrl: features + '/about/partials/about.html'
+            template: tpl()
         }];
     });
 
-}(define, require));
+}(define));

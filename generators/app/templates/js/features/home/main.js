@@ -15,11 +15,13 @@
         'fw/lib/FeatureBase',
         './Routes',
         './controller/HomeController',
-        './service/HomeService'
+        './service/HomeService',
+        'tpl!./partials/custom.html'
     ], function(Base,
         Routes,
         HomeController,
-        HomeService) {
+        HomeService,
+        customTpl) {
 
         var Feature = Base.extend(function() {
 
@@ -34,6 +36,9 @@
             this.run = function() {
                 this.mod.controller('HomeController', HomeController);
                 this.mod.service('HomeService', HomeService);
+                this.mod.run(['$templateCache', function($templateCache) {
+                    $templateCache.put('customTpl', customTpl());
+                }]);
             };
 
         });

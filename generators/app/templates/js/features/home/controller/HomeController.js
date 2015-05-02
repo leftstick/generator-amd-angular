@@ -8,8 +8,6 @@
 (function(define) {
     'use strict';
 
-    var features = requirejs.toUrl('features');
-
     /**
      * Register the HomeController class with RequireJS
      */
@@ -77,7 +75,7 @@
                     scope: $scope,
                     title: 'It\'s custom dialog',
                     animation: 'am-fade-and-slide-top',
-                    template: features + '/home/partials/custom.html'
+                    template: 'customTpl'
                 });
             };
 

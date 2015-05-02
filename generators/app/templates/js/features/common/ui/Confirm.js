@@ -8,9 +8,7 @@
 (function(define) {
     'use strict';
 
-    var commonBase = requirejs.toUrl('common');
-
-    define(['fw/lib/FeatureBase'], function(Base) {
+    define(['fw/lib/FeatureBase', 'tpl!./Confirm.html'], function(Base, tpl) {
 
         var Feature = Base.extend(function() {
 
@@ -19,7 +17,9 @@
             };
 
             this.run = function() {
-                this.mod.run(['events', '$timeout', '$rootScope', function(events, $timeout, $rootScope) {
+                this.mod.run(['events', '$timeout', '$rootScope', '$templateCache', function(events, $timeout, $rootScope, $templateCache) {
+
+                    $templateCache.put('confirmTpl', tpl());
 
                     events.on('confirm', function(opts) {
                         if (!opts) {
@@ -40,7 +40,7 @@
                             title: 'Confirm',
                             content: opts.content,
                             animation: 'am-fade-and-slide-top',
-                            template: commonBase + '/ui/Confirm.html'
+                            template: 'confirmTpl'
                         });
                     });
 

@@ -8,9 +8,7 @@
 (function(define) {
     'use strict';
 
-    var commonBase = requirejs.toUrl('common');
-
-    define(['fw/lib/FeatureBase', 'angular'], function(Base, angular) {
+    define(['fw/lib/FeatureBase', 'angular', 'tpl!./Error.html'], function(Base, angular, tpl) {
 
         var Feature = Base.extend(function() {
 
@@ -19,7 +17,8 @@
             };
 
             this.run = function() {
-                this.mod.run(['events', '$timeout', '$rootScope', function(events, $timeout, $rootScope) {
+                this.mod.run(['events', '$timeout', '$rootScope', '$templateCache', function(events, $timeout, $rootScope, $templateCache) {
+                    $templateCache.put('errorTpl', tpl());
 
                     events.on('error', function(opts) {
                         if (!opts) {
@@ -42,7 +41,7 @@
                                 backdrop: 'static',
                                 content: opts.content,
                                 animation: 'am-fade-and-slide-top',
-                                template: commonBase + '/ui/Error.html'
+                                template: 'errorTpl'
                             });
                         }, 0);
                     });
