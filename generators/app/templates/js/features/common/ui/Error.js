@@ -8,7 +8,7 @@
 (function(define) {
     'use strict';
 
-    define(['fw/lib/FeatureBase', 'angular', 'tpl!./Error.html'], function(Base, angular, tpl) {
+    define(['FeatureBase', 'angular', 'tpl!./Error.html'], function(Base, angular, tpl) {
 
         var Feature = Base.extend(function() {
 

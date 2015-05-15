@@ -9,7 +9,7 @@
 (function(define, global) {
     'use strict';
 
-    define(['fw/lib/InitBase', 'tpl!etc/config.json', 'jquery'], function(Base, tpl, $) {
+    define(['InitBase', 'tpl!etc/config.json', 'jquery'], function(Base, tpl, $) {
 
         var Initializer = Base.extend(function() {
 

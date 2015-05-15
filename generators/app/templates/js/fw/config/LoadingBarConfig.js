@@ -9,7 +9,7 @@
 (function(define) {
     'use strict';
 
-    define(['fw/lib/ConfiguratorBase'], function(Base) {
+    define(['ConfiguratorBase'], function(Base) {
 
         var Configurator = Base.extend(function() {
             this.constructor = function(features, app) {

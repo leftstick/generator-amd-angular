@@ -8,7 +8,7 @@
 (function(define, global) {
     'use strict';
 
-    define(['fw/lib/FeatureBase'], function(Base) {
+    define(['FeatureBase'], function(Base) {
 
         var TYPES = {
             alert: 'alert',

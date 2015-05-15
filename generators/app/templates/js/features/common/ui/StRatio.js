@@ -9,7 +9,7 @@
 (function(define) {
     'use strict';
 
-    define(['fw/lib/FeatureBase'], function(Base) {
+    define(['FeatureBase'], function(Base) {
 
         var Feature = Base.extend(function() {
 

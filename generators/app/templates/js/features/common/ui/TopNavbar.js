@@ -8,7 +8,7 @@
 (function(define) {
     'use strict';
 
-    define(['fw/lib/FeatureBase', 'jquery', 'tpl!./TopNavbar.html', 'tpl!./Aside.html'], function(Base, $, tpl, asideTpl) {
+    define(['FeatureBase', 'jquery', 'tpl!./TopNavbar.html', 'tpl!./Aside.html'], function(Base, $, tpl, asideTpl) {
 
         var Feature = Base.extend(function() {
 

@@ -8,7 +8,7 @@
 (function(define) {
     'use strict';
 
-    define(['fw/lib/FeatureBase', 'lodash'], function(Base, _) {
+    define(['FeatureBase', 'lodash'], function(Base, _) {
 
         var defaults = {
             animation: 'am-fade',

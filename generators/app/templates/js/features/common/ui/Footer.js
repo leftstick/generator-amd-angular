@@ -8,7 +8,7 @@
 (function(define) {
     'use strict';
 
-    define(['fw/lib/FeatureBase', 'jquery', 'tpl!common/ui/Footer.html', 'tpl!etc/config.json'], function(Base, $, tpl, config) {
+    define(['FeatureBase', 'jquery', 'tpl!common/ui/Footer.html', 'tpl!etc/config.json'], function(Base, $, tpl, config) {
 
         var Feature = Base.extend(function() {
 

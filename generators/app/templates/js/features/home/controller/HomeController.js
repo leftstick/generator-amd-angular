@@ -16,7 +16,9 @@
         /**
          * @constructor
          */
-        var HomeController = function($scope, events, utils, HomeService) {
+        var HomeController = function($scope, events, utils, HomeService, $alert) {
+
+            $scope.$alert = $alert;
 
             var noty = function(type, msg) {
                 events.emit('alert', {
@@ -121,7 +123,7 @@
             $scope.$on('$destroy', function() {});
         };
 
-        return ['$scope', 'events', 'utils', 'HomeService', HomeController];
+        return ['$scope', 'events', 'utils', 'HomeService', '$alert', HomeController];
 
     });
 

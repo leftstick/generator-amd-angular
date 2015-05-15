@@ -9,7 +9,7 @@
 (function(define) {
     'use strict';
 
-    define(['fw/lib/FeatureBase', 'lodash', 'jquery'], function(Base, _, $) {
+    define(['FeatureBase', 'lodash', 'jquery'], function(Base, _, $) {
 
         var Feature = Base.extend(function() {
 

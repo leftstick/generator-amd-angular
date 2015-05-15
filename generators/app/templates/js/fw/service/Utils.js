@@ -10,7 +10,7 @@
 (function(define, global) {
     'use strict';
 
-    define(['fw/lib/ServiceBase', 'angular', 'lodash'], function(Base, angular, _) {
+    define(['ServiceBase', 'angular', 'lodash'], function(Base, angular, _) {
 
         var Service = Base.extend(function() {
 

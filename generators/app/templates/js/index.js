@@ -22,6 +22,11 @@
             'features': 'features',
             'common': 'features/common',
 
+            'ConfiguratorBase': 'fw/lib/ConfiguratorBase',
+            'FeatureBase': 'fw/lib/FeatureBase',
+            'InitBase': 'fw/lib/InitBase',
+            'ServiceBase': 'fw/lib/ServiceBase',
+
             'tpl': 'bower/requirejs-tpl/tpl',
             'css': 'bower/require-css/css.min',
 

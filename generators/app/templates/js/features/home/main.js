@@ -12,7 +12,7 @@
     'use strict';
 
     define([
-        'fw/lib/FeatureBase',
+        'FeatureBase',
         './Routes',
         './controller/HomeController',
         './service/HomeService',

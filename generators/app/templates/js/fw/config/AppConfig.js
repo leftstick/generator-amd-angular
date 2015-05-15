@@ -10,7 +10,7 @@
 (function(define) {
     'use strict';
 
-    define(['fw/lib/ConfiguratorBase', 'tpl!etc/config.json'], function(Base, tpl) {
+    define(['ConfiguratorBase', 'tpl!etc/config.json'], function(Base, tpl) {
 
         var Configurator = Base.extend(function() {
             this.constructor = function(features, app) {
