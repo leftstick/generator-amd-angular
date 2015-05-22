@@ -24,9 +24,9 @@ Run: `yo require-angular`
 
 ## Run ##
 
-Once the project generated, go into the created directory with the given `name`.
+Once the project generated, move into the created directory with the given `name`.
 
-Run `sero`, and choose the second item from `sero` UI to start a static server.
+Run `sero`, and choose the second item `Start a static web server for current working directory` from launched UI to start a static server(all options can be left with default value).
 
 Open [http://localhost:8080](http://localhost:8080) to watch the demo
 

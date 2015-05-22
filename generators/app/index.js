@@ -84,21 +84,21 @@ var gen = generators.Base.extend({
         var self = this;
         var _ = require('lodash');
 
-        self.fs.copyTpl(self.templatePath('etc/config.json'), self.destinationPath('/etc/config.json'), self.obj);
-        self.copy(self.templatePath('img/logo.png'), self.destinationPath('/img/logo.png'));
-        self.directory(self.templatePath('js'), self.destinationPath('/js'), function(body) {
+        self.fs.copyTpl(self.templatePath('etc/config.json'), self.destinationPath('etc/config.json'), self.obj);
+        self.copy(self.templatePath('img/logo.png'), self.destinationPath('img/logo.png'));
+        self.directory(self.templatePath('js'), self.destinationPath('js'), function(body) {
             return _.template(body, {
                 interpolate: /<%=([\s\S]+?)%>/g
             })(self.obj);
         });
-        self.directory(self.templatePath('less'), self.destinationPath('/less'));
-        self.directory(self.templatePath('mock'), self.destinationPath('/mock'));
-        self.copy(self.templatePath('.bowerrc'), self.destinationPath('/.bowerrc'));
-        self.copy(self.templatePath('gitignore'), self.destinationPath('/.gitignore'));
-        self.copy(self.templatePath('.jshintrc'), self.destinationPath('/.jshintrc'));
-        self.fs.copyTpl(self.templatePath('bower.json'), self.destinationPath('/bower.json'), self.obj);
-        self.copy(self.templatePath('favicon.ico'), self.destinationPath('/favicon.ico'));
-        self.copy(self.templatePath('index.html'), self.destinationPath('/index.html'));
+        self.directory(self.templatePath('less'), self.destinationPath('less'));
+        self.directory(self.templatePath('mock'), self.destinationPath('mock'));
+        self.copy(self.templatePath('.bowerrc'), self.destinationPath('.bowerrc'));
+        self.copy(self.templatePath('gitignore'), self.destinationPath('.gitignore'));
+        self.copy(self.templatePath('.jshintrc'), self.destinationPath('.jshintrc'));
+        self.fs.copyTpl(self.templatePath('bower.json'), self.destinationPath('bower.json'), self.obj);
+        self.copy(self.templatePath('favicon.ico'), self.destinationPath('favicon.ico'));
+        self.copy(self.templatePath('index.html'), self.destinationPath('index.html'));
     },
     install: function() {
         this.bowerInstall();
