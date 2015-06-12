@@ -21,7 +21,6 @@
                 var dir = function() {
                     return {
                         restrict: 'A',
-                        scope: {},
                         link: function($scope, element, attr) {
                             var ratio = +(attr.stRatio);
                             element.css('width', ratio + '%');
