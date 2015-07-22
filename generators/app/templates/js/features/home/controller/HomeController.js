@@ -77,7 +77,7 @@
                     scope: $scope,
                     title: 'It\'s custom dialog',
                     animation: 'am-fade-and-slide-top',
-                    template: 'customTpl'
+                    templateUrl: 'customTpl'
                 });
             };
 
@@ -96,9 +96,7 @@
                     $scope.menus = data;
                 });
 
-            $scope.button = {
-                radio: 'right'
-            };
+            $scope.button = {radio: 'right'};
 
             HomeService.getDropdown()
                 .success(function(data) {
@@ -112,9 +110,7 @@
                 }
                 tab.active = true;
                 _.chain($scope.tabs)
-                    .reject({
-                        name: tab.name
-                    })
+                    .reject({name: tab.name})
                     .each(function(t) {
                         t.active = false;
                     });
@@ -123,7 +119,14 @@
             $scope.$on('$destroy', function() {});
         };
 
-        return ['$scope', 'events', 'utils', 'HomeService', '$alert', HomeController];
+        return [
+            '$scope',
+            'events',
+            'utils',
+            'HomeService',
+            '$alert',
+            HomeController
+        ];
 
     });
 
