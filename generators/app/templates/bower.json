@@ -13,7 +13,7 @@
     "tests"
   ],
   "dependencies": {
-    "requirejs": "~2.1.19",
+    "requirejs": "~2.1.20",
     "angular": "~1.4.3",
     "angular-route": "~1.4.3",
     "angular-animate": "~1.4.3",
@@ -30,7 +30,7 @@
     "jquery": "~2.1.4",
     "angular-sanitize": "~1.4.3",
     "angular-loading-bar": "~0.8.0",
-    "fontawesome": "~4.3.0",
+    "fontawesome": "~4.4.0",
     "angular-smart-table": "~2.1.1",
     "bootstrap-additions": "~0.3.1",
     "extend.js": "~0.2.2"
