@@ -11,7 +11,7 @@
 
     global.__config = {
         'appname': 'amd-demo',
-        'base': '',
+        'base': 'generator-amd-angular',
         'version': '1.0.0',
         'icp': 'ICP here',
         'protocol': 'https://raw.githubusercontent.com/leftstick/generator-amd-angular/master/LICENSE',
