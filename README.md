@@ -53,6 +53,27 @@ Run `sero server -r . -p 8080`, a static web server launched at port 8080.
 
 Open [http://localhost:8080](http://localhost:8080) to watch the released version.
 
-[npm-url]: https://npmjs.org/package/generator-require-angular
-[npm-image]: https://badge.fury.io/js/generator-require-angular.png
-[david-url]: https://david-dm.org/leftstick/generator-require-angular.png
+## References ##
+
+1. [yeoman](http://yeoman.io/)
+2. [gulp](http://gulpjs.com/)
+3. [webpack](http://webpack.github.io/)
+4. [jquery](http://jquery.com/)
+5. [angular](https://angularjs.org/)
+6. [Bootstrap](http://getbootstrap.com/)
+7. [angular-strap](http://mgcrea.github.io/angular-strap/)
+8. [fontawesome](http://fontawesome.io/)
+9. [angular-smart-table](http://lorenzofox3.github.io/smart-table-website/)
+10. [noty](http://ned.im/noty/)
+
+
+## LICENSE ##
+
+[MIT License](https://raw.githubusercontent.com/leftstick/generator-amd-angular/master/LICENSE)
+
+
+
+
+[npm-url]: https://npmjs.org/package/generator-amd-angular
+[npm-image]: https://badge.fury.io/js/generator-amd-angular.png
+[david-url]: https://david-dm.org/leftstick/generator-amd-angular.png
