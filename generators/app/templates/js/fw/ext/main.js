@@ -16,18 +16,18 @@
         'angular-route',
         'angular-sanitize',
         'angular-strap',
-        'angular-strap-tpl',
+        'angular-strap/dist/angular-strap.tpl',
         'angular-loading-bar',
         'angular-theme-spinner',
         'angular-smart-table',
         'noty',
-        'css!bootstrap',
-        'css!bootstrap-additions',
-        'css!fontawesome',
-        'css!animate',
-        'css!angular-loading-bar',
-        'css!angular-motion',
-        'css!angular-theme-spinner'
+        'bootstrap/dist/css/bootstrap.css',
+        'bootstrap-additions/dist/bootstrap-additions.css',
+        'font-awesome/css/font-awesome.css',
+        'animate.css/animate.css',
+        'angular-loading-bar/src/loading-bar.css',
+        'angular-motion/dist/angular-motion.css',
+        'angular-theme-spinner/dist/angular-theme-spinner.min.css'
     ], function() {
 
         return [

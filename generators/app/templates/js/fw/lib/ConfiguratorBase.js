@@ -9,20 +9,16 @@
 (function(define) {
     'use strict';
 
-    define(['extend'], function() {
+    define([], function() {
 
-        var ConfiguratorBase = Class.extend(function() {
+        var ConfiguratorBase = function(features, app) {
+            this.features = features;
+            this.app = app;
+        };
 
-            this.constructor = function(features, app) {
-                this.features = features;
-                this.app = app;
-            };
-
-            this.run = function() {};
-        });
+        ConfiguratorBase.prototype.run = function() {};
 
         return ConfiguratorBase;
-
     });
 
 }(define));

@@ -9,29 +9,29 @@
 (function(define) {
     'use strict';
 
-    define(['FeatureBase'], function(Base) {
+    define(['lib/FeatureBase'], function(Base) {
 
-        var Feature = Base.extend(function() {
+        var Feature = function() {
+            Base.call(this, 'StRatioModule');
+        };
 
-            this.initializer = function() {
-                this.super.initializer('StRatioModule');
-            };
+        Feature.prototype = new Base();
 
-            this.run = function() {
-                var dir = function() {
-                    return {
-                        restrict: 'A',
-                        link: function($scope, element, attr) {
-                            var ratio = +(attr.stRatio);
-                            element.css('width', ratio + '%');
-                        }
-                    };
+        Feature.prototype.constructor = Feature;
+
+        Feature.prototype.run = function() {
+            var dir = function() {
+                return {
+                    restrict: 'A',
+                    link: function($scope, element, attr) {
+                        var ratio = +(attr.stRatio);
+                        element.css('width', ratio + '%');
+                    }
                 };
-
-                this.mod.directive('stRatio', [dir]);
             };
 
-        });
+            this.mod.directive('stRatio', [dir]);
+        };
 
         return Feature;
 

@@ -6,7 +6,7 @@ var gen = generators.Base.extend({
     initializing: function() {
 
         try {
-            this.username = process.env['USER'] || process.env['USERPROFILE'].split(require('path').sep)[2];
+            this.username = process.env.USER || process.env.USERPROFILE.split(require('path').sep)[2];
         } catch (e) {
             this.username = '';
         }
@@ -15,54 +15,67 @@ var gen = generators.Base.extend({
         var done = this.async();
         var self = this;
 
-        this.prompt([{
-            type: 'input',
-            name: 'name',
-            message: 'Your project name',
-            validate: function(name) {
-                if (!name) {
-                    return 'Project name cannot be empty';
-                }
-                if (!/\w+/.test(name)) {
-                    return 'Project name should only consist of 0~9, a~z, A~Z, _, .';
-                }
+        this.prompt([
+            {
+                type: 'input',
+                name: 'name',
+                message: 'Your project name',
+                validate: function(name) {
+                    if (!name) {
+                        return 'Project name cannot be empty';
+                    }
+                    if (!/\w+/.test(name)) {
+                        return 'Project name should only consist of 0~9, a~z, A~Z, _, .';
+                    }
 
-                var fs = require('fs');
-                if (!fs.existsSync(self.destinationPath(name))) {
+                    var fs = require('fs');
+                    if (!fs.existsSync(self.destinationPath(name))) {
+                        return true;
+                    }
+                    if (require('fs').statSync(self.destinationPath(name)).isDirectory()) {
+                        return 'Project already exist';
+                    }
                     return true;
                 }
-                if (require('fs').statSync(self.destinationPath(name)).isDirectory()) {
-                    return 'Project already exist';
-                }
-                return true;
+            },
+            {
+                type: 'input',
+                name: 'description',
+                message: 'Your project description',
+                default: ''
+            },
+            {
+                type: 'input',
+                name: 'username',
+                message: 'Your name',
+                default: this.username
+            },
+            {
+                type: 'input',
+                name: 'email',
+                message: 'Your email',
+                default: ''
+            },
+            {
+                type: 'confirm',
+                name: 'pushState',
+                message: 'Use html5 mode?',
+                default: true
+            },
+            {
+                type: 'list',
+                name: 'registry',
+                message: 'Which registry would you use?',
+                choices: [
+                    'https://registry.npm.taobao.org',
+                    'https://registry.npmjs.org'
+                ]
             }
-        }, {
-            type: 'input',
-            name: 'description',
-            message: 'Your project description',
-            default: ''
-        }, {
-            type: 'input',
-            name: 'username',
-            message: 'Your name',
-            default: this.username
-        }, {
-            type: 'input',
-            name: 'email',
-            message: 'Your email',
-            default: ''
-        }, {
-            type: 'confirm',
-            name: 'pushState',
-            message: 'Use html5 mode?',
-            default: true
-        }], function(answers) {
+        ], function(answers) {
             require('date-util');
             this.answers = answers;
             this.answers.date = new Date().format('mmm d, yyyy');
-            this.obj = {
-                answers: this.answers
-            };
+            this.obj = {answers: this.answers};
             done();
         }.bind(this));
     },
@@ -84,8 +97,8 @@ var gen = generators.Base.extend({
         var self = this;
         var _ = require('lodash');
 
-        self.fs.copyTpl(self.templatePath('etc/config.json'), self.destinationPath('etc/config.json'), self.obj);
-        self.copy(self.templatePath('img/logo.png'), self.destinationPath('img/logo.png'));
+        self.fs.copyTpl(self.templatePath('etc/config.js'), self.destinationPath('etc/config.js'), self.obj);
+        self.directory(self.templatePath('img'), self.destinationPath('img'));
         self.directory(self.templatePath('js'), self.destinationPath('js'), function(body) {
             return _.template(body, {
                 interpolate: /<%=([\s\S]+?)%>/g
@@ -93,15 +106,16 @@ var gen = generators.Base.extend({
         });
         self.directory(self.templatePath('less'), self.destinationPath('less'));
         self.directory(self.templatePath('mock'), self.destinationPath('mock'));
-        self.copy(self.templatePath('.bowerrc'), self.destinationPath('.bowerrc'));
         self.copy(self.templatePath('gitignore'), self.destinationPath('.gitignore'));
-        self.copy(self.templatePath('.jshintrc'), self.destinationPath('.jshintrc'));
-        self.fs.copyTpl(self.templatePath('bower.json'), self.destinationPath('bower.json'), self.obj);
-        self.copy(self.templatePath('favicon.ico'), self.destinationPath('favicon.ico'));
         self.copy(self.templatePath('index.html'), self.destinationPath('index.html'));
+        self.copy(self.templatePath('gulpfile.js'), self.destinationPath('gulpfile.js'));
+        self.fs.copyTpl(self.templatePath('package.json_vm'), self.destinationPath('package.json'), self.obj);
+        self.copy(self.templatePath('webpack.config.js'), self.destinationPath('webpack.config.js'));
     },
     install: function() {
-        this.bowerInstall();
+        this.npmInstall(undefined, {
+            registry: this.answers.registry
+        });
     },
     end: function() {
         this.log.ok('Project ' + this.answers.name + ' generated!!!');

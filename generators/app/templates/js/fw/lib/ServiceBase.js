@@ -9,17 +9,14 @@
 (function(define) {
     'use strict';
 
-    define(['extend'], function() {
+    define([], function() {
 
-        var ServiceBase = Class.extend(function() {
+        var ServiceBase = function(features, app) {
+            this.features = features;
+            this.app = app;
+        };
 
-            this.constructor = function(features, app) {
-                this.features = features;
-                this.app = app;
-            };
-
-            this.run = function() {};
-        });
+        ServiceBase.prototype.run = function() {};
 
         return ServiceBase;
 

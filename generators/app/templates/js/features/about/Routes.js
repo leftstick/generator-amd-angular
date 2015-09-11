@@ -9,14 +9,16 @@
 (function(define) {
     'use strict';
 
-    define(['tpl!./partials/about.html'], function(tpl) {
-        return [{
-            id: 'about',
-            isDefault: false,
-            when: '/about',
-            controller: 'AboutController',
-            template: tpl()
-        }];
+    define(['./partials/about.html'], function(tpl) {
+        return [
+            {
+                id: 'about',
+                isDefault: false,
+                when: '/about',
+                controller: 'AboutController',
+                template: tpl
+            }
+        ];
     });
 
 }(define));

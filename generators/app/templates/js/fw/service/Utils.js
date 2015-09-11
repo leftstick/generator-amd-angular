@@ -10,17 +10,22 @@
 (function(define, global) {
     'use strict';
 
-    define(['ServiceBase', 'angular', 'lodash'], function(Base, angular, _) {
+    define(['lib/ServiceBase', 'angular', 'lodash'], function(Base, angular, _) {
 
-        var Service = Base.extend(function() {
+        var Service = function(features, app) {
+            Base.call(this, features, app);
+        };
 
-            this.constructor = function(features, app) {
-                this.super(features, app);
-            };
+        Service.prototype = new Base();
 
-            this.run = function() {
-                this.super.run();
-                this.app.service('utils', ['$q', '$window', 'CONF', function($q, $window, CONF) {
+        Service.prototype.constructor = Service;
+
+        Service.prototype.run = function() {
+            this.app.service('utils', [
+                '$q',
+                '$window',
+                'CONF',
+                function($q, $window, CONF) {
 
                     this.base64ToString = function(str) {
                         return global.decodeURIComponent(global.escape(global.atob(str)));
@@ -115,9 +120,9 @@
                         return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
                     };
 
-                }]);
-            };
-        });
+                }
+            ]);
+        };
 
         return Service;
 

@@ -8,29 +8,37 @@
 (function(define) {
     'use strict';
 
-    define(['FeatureBase', 'jquery', 'tpl!./TopNavbar.html', 'tpl!./Aside.html'], function(Base, $, tpl, asideTpl) {
+    define([
+        'lib/FeatureBase',
+        'jquery',
+        './TopNavbar.html',
+        './Aside.html'
+    ], function(Base, $, tpl, asideTpl) {
 
-        var Feature = Base.extend(function() {
+        var Feature = function() {
+            Base.call(this, 'TopnavModule');
+            this.$body = $('body');
+        };
 
-            this.initializer = function() {
-                this.super.initializer('TopnavModule');
-            };
+        Feature.prototype = new Base();
 
-            this.constructor = function() {
-                this.$body = $('body');
-            };
+        Feature.prototype.constructor = Feature;
 
-            this.beforeStart = function() {
-                this.$body.prepend(tpl());
-            };
+        Feature.prototype.beforeStart = function() {
+            this.$body.prepend(tpl);
+        };
 
-            this.run = function() {
-                this.mod.run(['$templateCache', function($templateCache) {
-                    $templateCache.put('aside', asideTpl());
-                }]);
-                this.mod.controller('HeaderCtrl', [function() {}]);
-            };
-        });
+        Feature.prototype.run = function() {
+            this.mod.run([
+                '$templateCache',
+                function($templateCache) {
+                    $templateCache.put('aside', asideTpl);
+                }
+            ]);
+            this.mod.controller('HeaderCtrl', [
+                function() {}
+            ]);
+        };
 
         return Feature;
     });

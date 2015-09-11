@@ -12,7 +12,7 @@
     'use strict';
 
     define([
-        'FeatureBase',
+        'lib/FeatureBase',
         './Routes',
         './controller/AboutController',
         './service/AboutService'
@@ -21,22 +21,19 @@
         AboutController,
         AboutService) {
 
-        var Feature = Base.extend(function() {
+        var Feature = function() {
+            Base.call(this, 'about');
+            this.routes = Routes;
+        };
 
-            this.initializer = function() {
-                this.super.initializer('about');
-            };
+        Feature.prototype = new Base();
 
-            this.constructor = function() {
-                this.routes = Routes;
-            };
+        Feature.prototype.constructor = Feature;
 
-            this.run = function() {
-                this.mod.controller('AboutController', AboutController);
-                this.mod.service('AboutService', AboutService);
-            };
-
-        });
+        Feature.prototype.run = function() {
+            this.mod.controller('AboutController', AboutController);
+            this.mod.service('AboutService', AboutService);
+        };
 
         return Feature;
     });

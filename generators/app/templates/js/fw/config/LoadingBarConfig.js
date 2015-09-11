@@ -9,22 +9,26 @@
 (function(define) {
     'use strict';
 
-    define(['ConfiguratorBase'], function(Base) {
+    define(['lib/ConfiguratorBase'], function(Base) {
 
-        var Configurator = Base.extend(function() {
-            this.constructor = function(features, app) {
-                this.super(features, app);
-            };
+        var Configurator = function(features, app) {
+            Base.call(this, features, app);
+        };
 
-            this.run = function() {
-                this.super.run();
-                this.app.config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
+        Configurator.prototype = new Base();
+
+        Configurator.prototype.constructor = Configurator;
+
+        Configurator.prototype.run = function() {
+            this.app.config([
+                'cfpLoadingBarProvider',
+                function(cfpLoadingBarProvider) {
                     cfpLoadingBarProvider.includeSpinner = true;
                     cfpLoadingBarProvider.includeBar = true;
                     cfpLoadingBarProvider.latencyThreshold = 100;
-                }]);
-            };
-        });
+                }
+            ]);
+        };
 
         return Configurator;
 

@@ -9,25 +9,26 @@
 (function(define) {
     'use strict';
 
-    define(['FeatureBase'], function(Base) {
+    define(['lib/FeatureBase'], function(Base) {
 
-        var Feature = Base.extend(function() {
+        var Feature = function() {
+            Base.call(this, 'AutofocusModule');
+        };
 
-            this.initializer = function() {
-                this.super.initializer('AutofocusModule');
-            };
+        Feature.prototype = new Base();
 
-            this.run = function() {
-                this.mod.directive('autofocus', function() {
-                    return {
-                        restrict: 'A',
-                        link: function($scope, element) {
-                            element[0].focus();
-                        }
-                    };
-                });
-            };
-        });
+        Feature.prototype.constructor = Feature;
+
+        Feature.prototype.run = function() {
+            this.mod.directive('autofocus', function() {
+                return {
+                    restrict: 'A',
+                    link: function($scope, element) {
+                        element[0].focus();
+                    }
+                };
+            });
+        };
 
         return Feature;
 

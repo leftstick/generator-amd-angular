@@ -1,8 +1,8 @@
 /**
  *  main.js is responsible for the organization of features and cache control.
  *
- *  @author  <%= answers.username %>
- *  @date    <%= answers.date %>
+ *  @author  haozuo
+ *  @date    Sep 11, 2015
  *
  */
 (function(define, require, doc) {
@@ -16,10 +16,10 @@
         'config/main',
         'service/main',
         'features/main',
-        'splash'
+        'splash-screen'
     ], function(_, angular, Initializers, ext, Configurators, Services, Features, splash) {
 
-        require(['css!maincss']);
+        require(['less/main.less']);
 
         var App = function() {
             this.appName = 'require-angular-seed';

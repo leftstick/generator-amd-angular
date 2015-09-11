@@ -11,17 +11,20 @@
 (function(define) {
     'use strict';
 
-    define(['ServiceBase', 'angular', 'lodash'], function(Base, angular, _) {
+    define(['lib/ServiceBase', 'angular', 'lodash'], function(Base, angular, _) {
 
-        var Service = Base.extend(function() {
+        var Service = function(features, app) {
+            Base.call(this, features, app);
+        };
 
-            this.constructor = function(features, app) {
-                this.super(features, app);
-            };
+        Service.prototype = new Base();
 
-            this.run = function() {
-                this.super.run();
-                this.app.factory('events', ['$rootScope', function($rootScope) {
+        Service.prototype.constructor = Service;
+
+        Service.prototype.run = function() {
+            this.app.factory('events', [
+                '$rootScope',
+                function($rootScope) {
                     var factory = {};
 
                     var listeners = {};
@@ -49,10 +52,9 @@
                     };
 
                     return factory;
-                }]);
-            };
-
-        });
+                }
+            ]);
+        };
 
         return Service;
 

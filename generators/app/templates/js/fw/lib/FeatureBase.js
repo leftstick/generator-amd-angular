@@ -9,24 +9,18 @@
 (function(define) {
     'use strict';
 
-    define(['angular', 'extend'], function(angular) {
+    define(['angular'], function(angular) {
 
-        var ConfiguratorBase = Class.extend(function() {
+        var FeatureBase = function(name) {
+            this.export = name;
+            this.mod = angular.module(this.export, []);
+        };
 
-            this.initializer = function(name) {
-                this.export = name;
-                this.mod = angular.module(this.export, []);
-            };
+        FeatureBase.prototype.beforeStart = function() {};
 
-            this.constructor = function() {};
+        FeatureBase.prototype.run = function() {};
 
-            this.beforeStart = function() {};
-
-            this.run = function() {};
-        });
-
-        return ConfiguratorBase;
-
+        return FeatureBase;
     });
 
 }(define));

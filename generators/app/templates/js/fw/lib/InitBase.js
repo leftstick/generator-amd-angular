@@ -9,20 +9,13 @@
 (function(define) {
     'use strict';
 
-    define(['extend'], function() {
+    define([], function() {
 
-        var InitBase = Class.extend(function() {
+        var InitBase = function() {};
 
-            this.constructor = function(features, app) {
-                this.features = features;
-                this.app = app;
-            };
-
-            this.run = function() {};
-        });
+        InitBase.prototype.run = function() {};
 
         return InitBase;
-
     });
 
 }(define));

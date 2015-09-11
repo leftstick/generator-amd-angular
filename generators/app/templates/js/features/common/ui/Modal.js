@@ -8,7 +8,7 @@
 (function(define) {
     'use strict';
 
-    define(['FeatureBase', 'lodash'], function(Base, _) {
+    define(['lib/FeatureBase', 'lodash'], function(Base, _) {
 
         var defaults = {
             animation: 'am-fade',
@@ -26,14 +26,19 @@
             id: ''
         };
 
-        var Feature = Base.extend(function() {
+        var Feature = function() {
+            Base.call(this, 'ModalWrapper');
+        };
 
-            this.initializer = function() {
-                this.super.initializer('ModalWrapper');
-            };
+        Feature.prototype = new Base();
 
-            this.run = function() {
-                this.mod.run(['events', '$modal', function(events, $modal) {
+        Feature.prototype.constructor = Feature;
+
+        Feature.prototype.run = function() {
+            this.mod.run([
+                'events',
+                '$modal',
+                function(events, $modal) {
 
                     events.on('modal', function(opts) {
                         var options = _.defaults(opts, defaults);
@@ -41,10 +46,9 @@
                         $modal(options);
                     });
 
-                }]);
-            };
-
-        });
+                }
+            ]);
+        };
 
         return Feature;
 

@@ -12,36 +12,36 @@
     'use strict';
 
     define([
-        'FeatureBase',
+        'lib/FeatureBase',
         './Routes',
         './controller/HomeController',
         './service/HomeService',
-        'tpl!./partials/custom.html'
+        './partials/custom.html'
     ], function(Base,
         Routes,
         HomeController,
         HomeService,
         customTpl) {
 
-        var Feature = Base.extend(function() {
+        var Feature = function() {
+            Base.call(this, 'home');
+            this.routes = Routes;
+        };
 
-            this.initializer = function() {
-                this.super.initializer('home');
-            };
+        Feature.prototype = new Base();
 
-            this.constructor = function() {
-                this.routes = Routes;
-            };
+        Feature.prototype.constructor = Feature;
 
-            this.run = function() {
-                this.mod.controller('HomeController', HomeController);
-                this.mod.service('HomeService', HomeService);
-                this.mod.run(['$templateCache', function($templateCache) {
-                    $templateCache.put('customTpl', customTpl());
-                }]);
-            };
-
-        });
+        Feature.prototype.run = function() {
+            this.mod.controller('HomeController', HomeController);
+            this.mod.service('HomeService', HomeService);
+            this.mod.run([
+                '$templateCache',
+                function($templateCache) {
+                    $templateCache.put('customTpl', customTpl);
+                }
+            ]);
+        };
 
         return Feature;
 

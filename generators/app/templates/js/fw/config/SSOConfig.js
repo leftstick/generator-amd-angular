@@ -8,21 +8,25 @@
 (function(define) {
     'use strict';
 
-    define(['ConfiguratorBase'], function(Base) {
+    define(['lib/ConfiguratorBase'], function(Base) {
 
-        var Configurator = Base.extend(function() {
+        var Configurator = function(features, app) {
+            Base.call(this, features, app);
+        };
 
-            this.constructor = function(features, app) {
-                this.super(features, app);
-            };
+        Configurator.prototype = new Base();
 
-            this.run = function() {
-                this.app.config(['$httpProvider', function($httpProvider) {
+        Configurator.prototype.constructor = Configurator;
+
+        Configurator.prototype.run = function() {
+            this.app.config([
+                '$httpProvider',
+                function($httpProvider) {
                     $httpProvider.defaults.headers.common.Accept = 'application/json;charset=utf-8';
                     $httpProvider.defaults.withCredentials = true;
-                }]);
-            };
-        });
+                }
+            ]);
+        };
 
         return Configurator;
 

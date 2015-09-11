@@ -1,15 +1,15 @@
 {
-  "name": "generator-require-angular",
-  "version": "1.3.5",
-  "description": "generator-require-angular",
+  "name": "generator-amd-angular",
+  "version": "1.4.0",
+  "description": "generator-amd-angular",
   "repository": {
     "type": "git",
-    "url": "https://github.com/leftstick/generator-require-angular.git"
+    "url": "https://github.com/leftstick/generator-amd-angular.git"
   },
   "bugs": {
-    "url": "https://github.com/leftstick/generator-require-angular/issues"
+    "url": "https://github.com/leftstick/generator-amd-angular/issues"
   },
-  "homepage": "https://github.com/leftstick/generator-require-angular",
+  "homepage": "https://github.com/leftstick/generator-amd-angular",
   "files": [
     "generators"
   ],
@@ -20,7 +20,7 @@
   "license": "MIT",
   "dependencies": {
     "date-util": "^1.2.1",
-    "lodash": "^3.10.0",
-    "yeoman-generator": "^0.20.2"
+    "lodash": "^3.10.1",
+    "yeoman-generator": "^0.20.3"
   }
 }
