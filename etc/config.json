@@ -1,8 +1,0 @@
-{
-    "appname": "Achilles-AngularJS Seed Project",
-    "base": "generator-require-angular",
-    "version": "1.0.0",
-    "icp": "ICP here",
-    "protocol": "https://raw.githubusercontent.com/leftstick/generator-require-angular/master/LICENSE",
-    "api": "/generator-require-angular/mock"
-}
