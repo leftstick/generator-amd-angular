@@ -9,12 +9,12 @@
 (function(define, global) {
     'use strict';
 
-    define(['lib/InitBase', 'jquery'], function(Base, $) {
+    define(['lib/InitBase', 'angular'], function(Base, angular) {
 
 
         var Initializer = function(features, app) {
             Base.call(this, features, app);
-            this.head = $(global.document.head);
+            this.head = angular.element(global.document.head);
             this.config = __config;
         };
 
@@ -23,20 +23,20 @@
         Initializer.prototype.constructor = Initializer;
 
         Initializer.prototype.title = function(t) {
-            var title = $('<title></title>');
+            var title = angular.element('<title></title>');
             title.text(t);
             this.head.append(title);
         };
 
         Initializer.prototype.base = function(attr) {
-            var base = $('<base>');
+            var base = angular.element('<base>');
             base.attr(attr);
             this.head.find('base').remove();
             this.head.append(base);
         };
 
         Initializer.prototype.meta = function(attr) {
-            var meta = $('<meta>');
+            var meta = angular.element('<meta>');
             meta.attr(attr);
             this.head.append(meta);
         };

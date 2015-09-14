@@ -6,14 +6,14 @@
  *  @date    <%= answers.date %>
  *
  */
-(function(define) {
+(function(define, doc) {
     'use strict';
 
-    define(['lib/FeatureBase', 'lodash', 'jquery'], function(Base, _, $) {
+    define(['lib/FeatureBase', 'lodash', 'angular'], function(Base, _, angular) {
 
         var Feature = function() {
             Base.call(this, 'RouteIndicator');
-            this.$body = $('body');
+            this.$body = angular.element(doc.body);
         };
 
         Feature.prototype = new Base();
@@ -41,4 +41,4 @@
 
     });
 
-}(define));
+}(define, document));

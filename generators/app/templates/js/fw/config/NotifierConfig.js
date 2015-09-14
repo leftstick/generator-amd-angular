@@ -1,5 +1,5 @@
 /**
- *  LoadingBarConfig turn on the loading indicator function.
+ *  NotifierConfig set angular-sweetnotifier needed configuration
  *
  *
  *  @author  <%= answers.username %>
@@ -21,11 +21,10 @@
 
         Configurator.prototype.run = function() {
             this.app.config([
-                'cfpLoadingBarProvider',
-                function(cfpLoadingBarProvider) {
-                    cfpLoadingBarProvider.includeSpinner = true;
-                    cfpLoadingBarProvider.includeBar = true;
-                    cfpLoadingBarProvider.latencyThreshold = 100;
+                'notifierProvider',
+                function(notifierProvider) {
+                    notifierProvider.setPlacement('top', 'right');
+                    notifierProvider.setUseNativeWhileBlur(true);
                 }
             ]);
         };

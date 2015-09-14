@@ -5,19 +5,19 @@
  *  @date    <%= answers.date %>
  *
  */
-(function(define) {
+(function(define, doc) {
     'use strict';
 
     define([
         'lib/FeatureBase',
-        'jquery',
+        'angular',
         './TopNavbar.html',
         './Aside.html'
-    ], function(Base, $, tpl, asideTpl) {
+    ], function(Base, angular, tpl, asideTpl) {
 
         var Feature = function() {
             Base.call(this, 'TopnavModule');
-            this.$body = $('body');
+            this.$body = angular.element(doc.body);
         };
 
         Feature.prototype = new Base();
@@ -43,4 +43,4 @@
         return Feature;
     });
 
-})(define);
+})(define, document);

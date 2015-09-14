@@ -5,15 +5,15 @@
  *  @date    <%= answers.date %>
  *
  */
-(function(define) {
+(function(define, doc) {
     'use strict';
 
-    define(['lib/FeatureBase', 'jquery', './Footer.html'], function(Base, $, tpl) {
+    define(['lib/FeatureBase', 'angular', './Footer.html'], function(Base, angular, tpl) {
 
         var Feature = function() {
             Base.call(this, 'FooterModule');
             this.config = __config;
-            this.$body = $('body');
+            this.$body = angular.element(doc.body);
         };
 
         Feature.prototype = new Base();
@@ -38,4 +38,4 @@
 
     });
 
-})(define);
+})(define, document);

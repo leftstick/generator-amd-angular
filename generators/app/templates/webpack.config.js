@@ -51,11 +51,6 @@ module.exports = {
         ]
     },
     plugins: [
-        new webpack.ProvidePlugin({
-            $: 'jquery',
-            jQuery: 'jquery',
-            'window.jQuery': 'jquery'
-        }),
         new webpack.optimize.CommonsChunkPlugin('[hash].common.bundle.js')
     ]
 };

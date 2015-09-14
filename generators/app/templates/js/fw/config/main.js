@@ -11,7 +11,7 @@
 
     define([
         './AppConfig',
-        './LoadingBarConfig',
+        './NotifierConfig',
         './RouterConfig',
         './SSOConfig'
     ], function() {

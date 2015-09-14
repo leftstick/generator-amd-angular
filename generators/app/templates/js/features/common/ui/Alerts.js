@@ -5,116 +5,57 @@
  *  @date    <%= answers.date %>
  *
  */
-(function(define, global) {
+(function(define, doc) {
     'use strict';
 
-    define(['lib/FeatureBase'], function(Base) {
+    define(['lib/FeatureBase', 'angular'], function(Base, angular) {
 
         var TYPES = {
-            alert: 'alert',
-            notification: 'notification',
             warning: 'warning',
             error: 'error',
-            info: 'information',
-            success: 'success',
-            confirm: 'confirm'
+            info: 'info',
+            success: 'success'
         };
 
         var TIMEOUTS = {
-            alert: 3000,
-            notification: 3000,
             warning: 3000,
             error: 5000,
             info: 3000,
-            success: 3000,
-            confirm: false
+            success: 3000
         };
 
-        var LAYOUTS = {
-            alert: 'topRight',
-            notification: 'topRight',
-            warning: 'topRight',
-            error: 'topRight',
-            info: 'topRight',
-            success: 'topRight',
-            confirm: 'center'
-        };
-
-        var ANIMATIONS_IN = {
-            alert: 'bounceInRight',
-            notification: 'bounceInRight',
-            warning: 'bounceInLeft',
-            error: 'wobble',
-            info: 'bounceInRight',
-            success: 'bounceInRight',
-            confirm: 'fadeIn'
-        };
-
-        var ANIMATIONS_OUT = {
-            alert: 'bounceOutLeft',
-            notification: 'bounceOutLeft',
-            warning: 'bounceOutRight',
-            error: 'flipOutX',
-            info: 'bounceOutLeft',
-            success: 'bounceOutLeft',
-            confirm: 'flipOutX'
+        var TITLES = {
+            warning: 'Warning',
+            error: 'Error',
+            info: 'Info',
+            success: 'Success'
         };
 
         var Feature = function() {
             Base.call(this, 'Alerts');
+            this.$body = angular.element(doc.body);
         };
 
         Feature.prototype = new Base();
 
         Feature.prototype.constructor = Feature;
 
+        Feature.prototype.beforeStart = function() {
+            this.$body.append('<sweetnotifier></sweetnotifier>');
+        };
+
         Feature.prototype.run = function() {
             this.mod.run([
                 'events',
-                function(events) {
+                'notifier',
+                function(events, notifier) {
 
                     events.on('alert', function(data) {
-                        global.noty({
-                            layout: LAYOUTS[data.type],
-                            text: data.message,
+                        notifier.emit({
                             type: TYPES[data.type],
-                            animation: {
-                                open: 'animated ' + ANIMATIONS_IN[data.type], // Animate.css class names
-                                close: 'animated ' + ANIMATIONS_OUT[data.type], // Animate.css class names
-                                easing: 'swing', // unavailable - no need
-                                speed: 500 // unavailable - no need
-                            },
-                            timeout: TIMEOUTS[data.type],
-                            dismissQueue: true,
-                            maxVisible: 6,
-                            closeWith: [
-                                'click'
-                            ], // ['click', 'button', 'hover', 'backdrop'] // backdrop click will close all notifications
-                            callback: {
-                                onShow: data.onShow || angular.noop,
-                                afterShow: data.afterShow || angular.noop,
-                                onClose: data.onClose || angular.noop,
-                                afterClose: data.afterClose || angular.noop,
-                                onCloseClick: data.onCloseClick || angular.noop,
-                            },
-                            buttons: (data.type !== 'confirm') ? false : [
-                                {
-                                    addClass: 'btn btn-primary',
-                                    text: '确定',
-                                    onClick: function($noty) {
-                                        $noty.close();
-                                        (data.onOkClick || angular.noop)();
-                                    }
-                                },
-                                {
-                                    addClass: 'btn btn-danger',
-                                    text: '取消',
-                                    onClick: function($noty) {
-                                        $noty.close();
-                                        (data.onCancelClick || angular.noop)();
-                                    }
-                                }
-                            ]
+                            title: TITLES[data.type],
+                            content: data.message,
+                            timeout: TIMEOUTS[data.type]
                         });
                     });
                 }
@@ -125,4 +66,4 @@
 
     });
 
-})(define, window);
+})(define, document);
