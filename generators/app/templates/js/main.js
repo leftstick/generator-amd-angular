@@ -1,8 +1,8 @@
 /**
  *  main.js is responsible for the organization of features and cache control.
  *
- *  @author  haozuo
- *  @date    Sep 11, 2015
+ *  @author  <%= answers.username %>
+ *  @date    <%= answers.date %>
  *
  */
 (function(define, require, doc) {
@@ -64,7 +64,13 @@
         };
 
         App.prototype.destroySplash = function() {
+            var _this = this;
             splash.destroy();
+            setTimeout(function() {
+                if (splash.isRunning()) {
+                    _this.destroySplash();
+                }
+            }, 100);
         };
 
         App.prototype.launch = function() {

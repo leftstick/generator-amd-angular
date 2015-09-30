@@ -1,6 +1,6 @@
 {
   "name": "generator-amd-angular",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "generator-amd-angular",
   "repository": {
     "type": "git",
@@ -14,7 +14,7 @@
     "generators"
   ],
   "keywords": [
-    "generators"
+    "yeoman-generator", "amd", "webpack"
   ],
   "author": "Howard.Zuo",
   "license": "MIT",

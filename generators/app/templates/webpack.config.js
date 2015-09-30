@@ -1,5 +1,3 @@
-'use strict';
-
 var path = require('path');
 var webpack = require('webpack');
 
@@ -29,10 +27,6 @@ module.exports = {
                 exclude: /(node_modules|bower_components)/
             },
             {
-                test: /\.json$/,
-                loader: 'json'
-            },
-            {
                 test: /\.(eot|svg|ttf|woff|woff2)\w*/,
                 loader: 'file'
             },
@@ -51,6 +45,11 @@ module.exports = {
         ]
     },
     plugins: [
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false
+            }
+        }),
         new webpack.optimize.CommonsChunkPlugin('[hash].common.bundle.js')
     ]
 };
