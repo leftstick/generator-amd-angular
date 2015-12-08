@@ -7,26 +7,20 @@
  *  @date    <%= answers.date %>
  *
  */
-(function(define) {
-    'use strict';
+'use strict';
 
-    define(['lib/ConfiguratorBase'], function(Base) {
+define(['lib/ConfiguratorBase', 'etc/config'], function(ConfiguratorBase, config) {
 
-        var Configurator = function(features, app) {
-            Base.call(this, features, app);
-            this.config = __config;
-        };
+    class Configurator extends ConfiguratorBase {
+        constructor(features, app) {
+            super(features, app);
+        }
 
-        Configurator.prototype = new Base();
+        execute() {
+            this.constant('CONF', config);
+        }
+    }
 
-        Configurator.prototype.constructor = Configurator;
+    return Configurator;
 
-        Configurator.prototype.run = function() {
-            this.app.constant('CONF', this.config);
-        };
-
-        return Configurator;
-
-    });
-
-}(define));
+});

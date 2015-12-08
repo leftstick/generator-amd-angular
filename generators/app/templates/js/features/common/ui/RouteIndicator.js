@@ -6,39 +6,37 @@
  *  @date    <%= answers.date %>
  *
  */
-(function(define, doc) {
-    'use strict';
+'use strict';
 
-    define(['lib/FeatureBase', 'lodash', 'angular'], function(Base, _, angular) {
+define(['lib/FeatureBase', 'lib/Pluck', 'angular'], function(FeatureBase, pluck, angular) {
 
-        var Feature = function() {
-            Base.call(this, 'RouteIndicator');
-            this.$body = angular.element(doc.body);
-        };
+    var element = angular.element;
 
-        Feature.prototype = new Base();
+    class Feature extends FeatureBase {
 
-        Feature.prototype.constructor = Feature;
+        constructor() {
+            super('RouteIndicator');
+            this.$body = element(document.body);
+        }
 
-        Feature.prototype.run = function() {
-            var self = this;
-            this.mod.run([
-                '$rootScope',
-                'Routes',
-                function($rootScope, Routes) {
-                    var classes = _.pluck(Routes, 'id').join(' ');
-                    $rootScope.$on('$routeChangeSuccess', function(e, route) {
-                        self.$body.removeClass(classes);
-                        if (route && route.$$route && route.$$route.id) {
-                            self.$body.addClass(route.$$route.id);
-                        }
-                    });
+        indicator($rootScope, Routes) {
+            var _this = this;
+            var classes = pluck(Routes, 'id').join(' ');
+            $rootScope.$on('$routeChangeSuccess', function(e, route) {
+                _this.$body.removeClass(classes);
+                if (route && route.$$route && route.$$route.id) {
+                    _this.$body.addClass(route.$$route.id);
                 }
-            ]);
-        };
+            });
+        }
 
-        return Feature;
+        execute() {
+            var indicator = this.indicator.bind(this);
+            indicator.$inject = ['$rootScope', 'Routes'];
+            this.run(indicator);
+        }
+    }
 
-    });
+    return Feature;
 
-}(define, document));
+});

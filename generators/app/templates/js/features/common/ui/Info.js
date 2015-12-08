@@ -5,60 +5,59 @@
  *  @date    <%= answers.date %>
  *
  */
-(function(define) {
-    'use strict';
+'use strict';
 
-    define(['lib/FeatureBase', 'angular', './Info.html'], function(Base, angular, tpl) {
+define(['lib/FeatureBase', 'angular', './Info.html'], function(FeatureBase, angular, tpl) {
 
-        var Feature = function() {
-            Base.call(this, 'InfoModal');
-        };
+    var isFunction = angular.isFunction;
 
-        Feature.prototype = new Base();
+    class Feature extends FeatureBase {
 
-        Feature.prototype.constructor = Feature;
+        constructor() {
+            super('InfoModal');
+        }
 
-        Feature.prototype.run = function() {
-            this.mod.run([
+        infoEvent(events, $timeout, $rootScope, $templateCache) {
+            $templateCache.put('infoTpl', tpl);
+
+            events.on('info', function(opts) {
+                if (!opts) {
+                    return;
+                }
+
+                var scope = $rootScope.$new();
+
+                scope.close = function($hide) {
+                    $hide();
+                    if (isFunction(opts.onClose)) {
+                        opts.onClose();
+                    }
+                };
+
+                $timeout(function() {
+                    events.emit('modal', {
+                        scope: scope,
+                        title: 'Information',
+                        backdrop: 'static',
+                        content: opts.content,
+                        animation: 'am-fade-and-slide-top',
+                        templateUrl: 'infoTpl'
+                    });
+                }, 0);
+            });
+        }
+
+        execute() {
+            this.infoEvent.$inject = [
                 'events',
                 '$timeout',
                 '$rootScope',
-                '$templateCache',
-                function(events, $timeout, $rootScope, $templateCache) {
-                    $templateCache.put('infoTpl', tpl);
+                '$templateCache'
+            ];
+            this.run(this.infoEvent);
+        }
+    }
 
-                    events.on('info', function(opts) {
-                        if (!opts) {
-                            return;
-                        }
+    return Feature;
 
-                        var scope = $rootScope.$new();
-
-                        scope.close = function($hide) {
-                            $hide();
-                            if (angular.isFunction(opts.onClose)) {
-                                opts.onClose();
-                            }
-                        };
-
-                        $timeout(function() {
-                            events.emit('modal', {
-                                scope: scope,
-                                title: 'Information',
-                                backdrop: 'static',
-                                content: opts.content,
-                                animation: 'am-fade-and-slide-top',
-                                templateUrl: 'infoTpl'
-                            });
-                        }, 0);
-                    });
-
-                }
-            ]);
-        };
-
-        return Feature;
-
-    });
-
-})(define);
+});

@@ -8,56 +8,63 @@
  *  @date    <%= answers.date %>
  *
  */
-(function(define) {
-    'use strict';
+'use strict';
 
-    define(['lib/ServiceBase', 'angular', 'lodash'], function(Base, angular, _) {
+define(['lib/ServiceBase', 'angular'], function(ServiceBase, angular) {
 
-        var Service = function(features, app) {
-            Base.call(this, features, app);
-        };
+    var isFunction = angular.isFunction;
 
-        Service.prototype = new Base();
+    class Service extends ServiceBase {
+        constructor(features, app) {
+            super(features, app);
+        }
 
-        Service.prototype.constructor = Service;
+        events($rootScope) {
+            var factory = {};
 
-        Service.prototype.run = function() {
-            this.app.factory('events', [
-                '$rootScope',
-                function($rootScope) {
-                    var factory = {};
+            var listeners = {};
 
-                    var listeners = {};
-
-                    factory.emit = function(eventName, data) {
-                        if (!eventName) {
-                            return;
-                        }
-                        $rootScope.$broadcast(eventName, data);
-                    };
-
-                    factory.on = function(eventName, callback) {
-                        if (!listeners[eventName]) {
-                            listeners[eventName] = [];
-                            $rootScope.$on(eventName, function(event, data) {
-                                _.each(listeners[eventName], function(listener) {
-                                    listener(data);
-                                });
-                            });
-
-                        }
-                        if (angular.isFunction(callback)) {
-                            listeners[eventName].push(callback);
-                        }
-                    };
-
-                    return factory;
+            factory.emit = function(eventName, data) {
+                if (!eventName) {
+                    return;
                 }
-            ]);
-        };
+                $rootScope.$broadcast(eventName, data);
+            };
 
-        return Service;
+            factory.on = function(eventName, callback) {
+                if (!listeners[eventName]) {
+                    listeners[eventName] = [];
+                    $rootScope.$on(eventName, function(event, data) {
+                        listeners[eventName].forEach(function(listener) {
+                            listener(data);
+                        });
+                    });
 
-    });
+                }
+                if (isFunction(callback)) {
+                    listeners[eventName].push(callback);
+                }
+            };
 
-}(define));
+            factory.off = function(eventName, callback) {
+                if (!listeners[eventName]) {
+                    return;
+                }
+                var index = listeners[eventName].indexOf(callback);
+                if (index > -1) {
+                    listeners[eventName].splice(index, 1);
+                }
+            };
+
+            return factory;
+        }
+
+        execute() {
+            this.events.$inject = ['$rootScope'];
+            this.factory('events', this.events);
+        }
+    }
+
+    return Service;
+
+});

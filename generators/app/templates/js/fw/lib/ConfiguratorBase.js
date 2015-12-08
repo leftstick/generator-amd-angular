@@ -6,19 +6,23 @@
  *  @date    <%= answers.date %>
  *
  */
-(function(define) {
-    'use strict';
+'use strict';
 
-    define([], function() {
+define([], function() {
 
-        var ConfiguratorBase = function(features, app) {
+    class ConfiguratorBase {
+
+        constructor(features, app) {
             this.features = features;
             this.app = app;
-        };
 
-        ConfiguratorBase.prototype.run = function() {};
+            this.config = app.config;
+            this.constant = app.constant;
+            this.value = app.value;
+        }
 
-        return ConfiguratorBase;
-    });
+        execute() {}
+    }
 
-}(define));
+    return ConfiguratorBase;
+});

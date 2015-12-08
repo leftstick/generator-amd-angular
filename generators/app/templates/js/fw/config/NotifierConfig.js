@@ -6,31 +6,26 @@
  *  @date    <%= answers.date %>
  *
  */
-(function(define) {
-    'use strict';
+'use strict';
 
-    define(['lib/ConfiguratorBase'], function(Base) {
+define(['lib/ConfiguratorBase'], function(ConfiguratorBase) {
 
-        var Configurator = function(features, app) {
-            Base.call(this, features, app);
-        };
+    class Configurator extends ConfiguratorBase {
+        constructor(features, app) {
+            super(features, app);
+        }
 
-        Configurator.prototype = new Base();
+        notifierConfig(notifierProvider) {
+            notifierProvider.setPlacement('top', 'right');
+            notifierProvider.setUseNativeWhileBlur(true);
+        }
 
-        Configurator.prototype.constructor = Configurator;
+        execute() {
+            this.notifierConfig.$inject = ['notifierProvider'];
+            this.config(this.notifierConfig);
+        }
+    }
 
-        Configurator.prototype.run = function() {
-            this.app.config([
-                'notifierProvider',
-                function(notifierProvider) {
-                    notifierProvider.setPlacement('top', 'right');
-                    notifierProvider.setUseNativeWhileBlur(true);
-                }
-            ]);
-        };
+    return Configurator;
 
-        return Configurator;
-
-    });
-
-}(define));
+});

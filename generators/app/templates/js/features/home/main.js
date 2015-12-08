@@ -8,43 +8,39 @@
  *
  * ******************************************************************************************************
  */
-(function(define) {
-    'use strict';
+'use strict';
 
-    define([
-        'lib/FeatureBase',
-        './Routes',
-        './controller/HomeController',
-        './service/HomeService',
-        './partials/custom.html'
-    ], function(Base,
-        Routes,
-        HomeController,
-        HomeService,
-        customTpl) {
+define([
+    'lib/FeatureBase',
+    './Routes',
+    './controller/HomeController',
+    './service/HomeService',
+    './partials/custom.html'
+], function(FeatureBase,
+    Routes,
+    HomeController,
+    HomeService,
+    customTpl) {
 
-        var Feature = function() {
-            Base.call(this, 'home');
+    class Feature extends FeatureBase {
+
+        constructor() {
+            super('home');
             this.routes = Routes;
-        };
+        }
 
-        Feature.prototype = new Base();
-
-        Feature.prototype.constructor = Feature;
-
-        Feature.prototype.run = function() {
-            this.mod.controller('HomeController', HomeController);
-            this.mod.service('HomeService', HomeService);
-            this.mod.run([
+        execute() {
+            this.controller('HomeController', HomeController);
+            this.service('HomeService', HomeService);
+            this.run([
                 '$templateCache',
                 function($templateCache) {
                     $templateCache.put('customTpl', customTpl);
                 }
             ]);
-        };
+        }
+    }
 
-        return Feature;
+    return Feature;
 
-    });
-
-}(define));
+});

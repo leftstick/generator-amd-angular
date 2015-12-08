@@ -5,37 +5,38 @@
  *  @date    <%= answers.date %>
  *
  */
-(function(define, doc) {
-    'use strict';
+'use strict';
 
-    define(['lib/FeatureBase', 'angular', './Footer.html'], function(Base, angular, tpl) {
+define([
+    'lib/FeatureBase',
+    'angular',
+    './Footer.html',
+    'etc/config'
+], function(FeatureBase, angular, tpl, config) {
 
-        var Feature = function() {
-            Base.call(this, 'FooterModule');
-            this.config = __config;
-            this.$body = angular.element(doc.body);
-        };
+    var element = angular.element;
 
-        Feature.prototype = new Base();
+    class Feature extends FeatureBase {
 
-        Feature.prototype.constructor = Feature;
+        constructor() {
+            super('FooterModule');
+            this.$body = element(document.body);
+        }
 
-        Feature.prototype.beforeStart = function() {
+        beforeStart() {
             this.$body.append(tpl);
-        };
+        }
 
-        Feature.prototype.run = function() {
-            var self = this;
-            this.mod.controller('FooterCtrl', [
-                '$scope',
-                function($scope) {
-                    $scope.config = self.config;
-                }
-            ]);
-        };
+        FooterCtrl($scope) {
+            $scope.config = config;
+        }
 
-        return Feature;
+        execute() {
+            this.FooterCtrl.$inject = ['$scope'];
+            this.mod.controller('FooterCtrl', this.FooterCtrl);
+        }
+    }
 
-    });
+    return Feature;
 
-})(define, document);
+});

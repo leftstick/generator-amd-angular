@@ -6,19 +6,16 @@
  *  @date    <%= answers.date %>
  *
  */
-(function(define) {
-    'use strict';
+'use strict';
 
-    define(['./partials/about.html'], function(tpl) {
-        return [
-            {
-                id: 'about',
-                isDefault: false,
-                when: '/about',
-                controller: 'AboutController',
-                template: tpl
-            }
-        ];
-    });
-
-}(define));
+define(['./partials/about.html'], function(tpl) {
+    return [
+        {
+            id: 'about',
+            isDefault: false,
+            when: '/about',
+            controller: 'AboutController',
+            template: tpl
+        }
+    ];
+});

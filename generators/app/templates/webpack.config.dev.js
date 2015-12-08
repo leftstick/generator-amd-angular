@@ -1,3 +1,4 @@
+'use strict';
 var path = require('path');
 var webpack = require('webpack');
 
@@ -7,15 +8,17 @@ module.exports = {
     },
     output: {
         path: path.resolve(__dirname, 'build', 'js'),
-        filename: '[hash].[name].bundle.js',
-        chunkFilename: '[hash].[id].bundle.js',
+        filename: '[name].bundle.js',
+        chunkFilename: '[id].bundle.js',
         publicPath: 'js/'
     },
+    debug: true,
+    devtool: 'sourcemap',
     module: {
         loaders: [
             {
                 test: /\.css$/,
-                loader: 'style!css!autoprefixer?browsers=last 5 version!'
+                loader: 'style/useable!css!autoprefixer?browsers=last 5 version!'
             },
             {
                 test: /\.less$/,
@@ -24,7 +27,12 @@ module.exports = {
             {
                 test: /\.js$/,
                 loader: 'babel',
-                exclude: /(node_modules|bower_components)/
+                exclude: /(node_modules|bower_components)/,
+                query: {
+                    presets: [
+                        'es2015'
+                    ]
+                }
             },
             {
                 test: /\.(eot|svg|ttf|woff|woff2)\w*/,
@@ -44,11 +52,6 @@ module.exports = {
         ]
     },
     plugins: [
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false
-            }
-        }),
-        new webpack.optimize.CommonsChunkPlugin('[hash].common.bundle.js')
+        new webpack.optimize.CommonsChunkPlugin('common.bundle.js')
     ]
 };

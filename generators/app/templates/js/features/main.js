@@ -5,15 +5,8 @@
  *  @date    <%= answers.date %>
  *
  */
-(function(define) {
-    'use strict';
+'use strict';
 
-    define([
-        './about/main',
-        './home/main',
-        './common/main'
-    ], function(about, home, common) {
-        return [about, home].concat(common);
-    });
-
-}(define));
+define(['./about/main', './home/main', './common/main'], function(about, home, common) {
+    return [about, home].concat(common);
+});

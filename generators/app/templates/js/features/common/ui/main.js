@@ -5,22 +5,19 @@
  *  @date    <%= answers.date %>
  *
  */
-(function(define) {
-    'use strict';
+'use strict';
 
-    define([
-        './Alerts',
-        './Autofocus',
-        './Confirm',
-        './Error',
-        './Footer',
-        './Info',
-        './Modal',
-        './RouteIndicator',
-        './StRatio',
-        './TopNavbar'
-    ], function() {
-        return [].slice.call(arguments);
-    });
-
-}(define));
+define([
+    './Alerts',
+    './Autofocus',
+    './Confirm',
+    './Error',
+    './Footer',
+    './Info',
+    './Modal',
+    './RouteIndicator',
+    './StRatio',
+    './TopNavbar'
+], function() {
+    return [].slice.call(arguments);
+});

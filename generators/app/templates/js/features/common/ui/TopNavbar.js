@@ -5,42 +5,42 @@
  *  @date    <%= answers.date %>
  *
  */
-(function(define, doc) {
-    'use strict';
+'use strict';
 
-    define([
-        'lib/FeatureBase',
-        'angular',
-        './TopNavbar.html',
-        './Aside.html'
-    ], function(Base, angular, tpl, asideTpl) {
+define([
+    'lib/FeatureBase',
+    'angular',
+    './TopNavbar.html',
+    './Aside.html'
+], function(FeatureBase, angular, tpl, asideTpl) {
 
-        var Feature = function() {
-            Base.call(this, 'TopnavModule');
-            this.$body = angular.element(doc.body);
-        };
+    var element = angular.element;
 
-        Feature.prototype = new Base();
+    class Feature extends FeatureBase {
 
-        Feature.prototype.constructor = Feature;
+        constructor() {
+            super('TopnavModule');
+            this.$body = element(document.body);
+        }
 
-        Feature.prototype.beforeStart = function() {
+        beforeStart() {
             this.$body.prepend(tpl);
-        };
+        }
 
-        Feature.prototype.run = function() {
-            this.mod.run([
-                '$templateCache',
-                function($templateCache) {
-                    $templateCache.put('aside', asideTpl);
-                }
-            ]);
-            this.mod.controller('HeaderCtrl', [
-                function() {}
-            ]);
-        };
+        templateCaching($templateCache) {
+            $templateCache.put('aside', asideTpl);
+        }
 
-        return Feature;
-    });
+        HeaderCtrl($scope) {}
 
-})(define, document);
+        execute() {
+            this.templateCaching.$inject = ['$templateCache'];
+            this.run(this.templateCaching);
+
+            this.HeaderCtrl.$inject = ['$scope'];
+            this.controller('HeaderCtrl', this.HeaderCtrl);
+        }
+    }
+
+    return Feature;
+});

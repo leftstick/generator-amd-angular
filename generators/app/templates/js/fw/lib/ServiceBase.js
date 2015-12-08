@@ -6,20 +6,22 @@
  *  @date    <%= answers.date %>
  *
  */
-(function(define) {
-    'use strict';
+'use strict';
 
-    define([], function() {
+define([], function() {
 
-        var ServiceBase = function(features, app) {
+    class ServiceBase {
+
+        constructor(features, app) {
             this.features = features;
             this.app = app;
-        };
 
-        ServiceBase.prototype.run = function() {};
+            this.factory = app.factory;
+            this.service = app.service;
+        }
 
-        return ServiceBase;
+        execute() {}
+    }
 
-    });
-
-}(define));
+    return ServiceBase;
+});

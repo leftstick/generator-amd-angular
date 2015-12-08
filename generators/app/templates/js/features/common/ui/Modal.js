@@ -5,53 +5,51 @@
  *  @date    <%= answers.date %>
  *
  */
-(function(define) {
-    'use strict';
+'use strict';
 
-    define(['lib/FeatureBase', 'lodash'], function(Base, _) {
+define(['lib/FeatureBase', 'angular', 'lib/Omit'], function(FeatureBase, angular, omit) {
 
-        var defaults = {
-            animation: 'am-fade',
-            backdropAnimation: 'am-fade',
-            placement: 'top',
-            title: '',
-            content: '',
-            html: false,
-            backdrop: true,
-            keyboard: true,
-            show: true,
-            container: false,
-            contentTemplate: false,
-            prefixEvent: 'modal',
-            id: ''
-        };
+    var merge = angular.merge;
 
-        var Feature = function() {
-            Base.call(this, 'ModalWrapper');
-        };
+    var defaults = {
+        animation: 'am-fade',
+        backdropAnimation: 'am-fade',
+        placement: 'top',
+        title: '',
+        content: '',
+        html: false,
+        backdrop: true,
+        keyboard: true,
+        show: true,
+        container: false,
+        contentTemplate: false,
+        prefixEvent: 'modal',
+        id: ''
+    };
 
-        Feature.prototype = new Base();
+    class Feature extends FeatureBase {
 
-        Feature.prototype.constructor = Feature;
+        constructor() {
+            super('ModalWrapper');
+        }
 
-        Feature.prototype.run = function() {
-            this.mod.run([
-                'events',
-                '$modal',
-                function(events, $modal) {
+        modalEvent(events, $modal) {
+            events.on('modal', function(opts) {
+                var options = merge({}, defaults, omit(opts, [
+                    'scope'
+                ]));
+                options.title = opts.title;
+                options.scope = opts.scope;
+                $modal(options);
+            });
+        }
 
-                    events.on('modal', function(opts) {
-                        var options = _.defaults(opts, defaults);
-                        options.title = opts.title;
-                        $modal(options);
-                    });
+        execute() {
+            this.modalEvent.$inject = ['events', '$modal'];
+            this.run(this.modalEvent);
+        }
+    }
 
-                }
-            ]);
-        };
+    return Feature;
 
-        return Feature;
-
-    });
-
-})(define);
+});

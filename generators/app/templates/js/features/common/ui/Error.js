@@ -5,60 +5,59 @@
  *  @date    <%= answers.date %>
  *
  */
-(function(define) {
-    'use strict';
+'use strict';
 
-    define(['lib/FeatureBase', 'angular', './Error.html'], function(Base, angular, tpl) {
+define(['lib/FeatureBase', 'angular', './Error.html'], function(FeatureBase, angular, tpl) {
 
-        var Feature = function() {
-            Base.call(this, 'ErrorModal');
-        };
+    var isFunction = angular.isFunction;
 
-        Feature.prototype = new Base();
+    class Feature extends FeatureBase {
 
-        Feature.prototype.constructor = Feature;
+        constructor() {
+            super('ErrorModal');
+        }
 
-        Feature.prototype.run = function() {
-            this.mod.run([
+        errorEvent(events, $timeout, $rootScope, $templateCache) {
+            $templateCache.put('errorTpl', tpl);
+
+            events.on('error', function(opts) {
+                if (!opts) {
+                    return;
+                }
+
+                var scope = $rootScope.$new();
+
+                scope.close = function($hide) {
+                    $hide();
+                    if (isFunction(opts.onClose)) {
+                        opts.onClose();
+                    }
+                };
+
+                $timeout(function() {
+                    events.emit('modal', {
+                        scope: scope,
+                        title: 'Exception',
+                        backdrop: 'static',
+                        content: opts.content,
+                        animation: 'am-fade-and-slide-top',
+                        templateUrl: 'errorTpl'
+                    });
+                }, 0);
+            });
+        }
+
+        execute() {
+            this.errorEvent.$inject = [
                 'events',
                 '$timeout',
                 '$rootScope',
-                '$templateCache',
-                function(events, $timeout, $rootScope, $templateCache) {
-                    $templateCache.put('errorTpl', tpl);
+                '$templateCache'
+            ];
+            this.run(this.errorEvent);
+        }
+    }
 
-                    events.on('error', function(opts) {
-                        if (!opts) {
-                            return;
-                        }
+    return Feature;
 
-                        var scope = $rootScope.$new();
-
-                        scope.close = function($hide) {
-                            $hide();
-                            if (angular.isFunction(opts.onClose)) {
-                                opts.onClose();
-                            }
-                        };
-
-                        $timeout(function() {
-                            events.emit('modal', {
-                                scope: scope,
-                                title: 'Exception',
-                                backdrop: 'static',
-                                content: opts.content,
-                                animation: 'am-fade-and-slide-top',
-                                templateUrl: 'errorTpl'
-                            });
-                        }, 0);
-                    });
-
-                }
-            ]);
-        };
-
-        return Feature;
-
-    });
-
-})(define);
+});

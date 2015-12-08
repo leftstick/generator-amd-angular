@@ -8,34 +8,30 @@
  *
  * ******************************************************************************************************
  */
-(function(define) {
-    'use strict';
+'use strict';
 
-    define([
-        'lib/FeatureBase',
-        './Routes',
-        './controller/AboutController',
-        './service/AboutService'
-    ], function(Base,
-        Routes,
-        AboutController,
-        AboutService) {
+define([
+    'lib/FeatureBase',
+    './Routes',
+    './controller/AboutController',
+    './service/AboutService'
+], function(FeatureBase,
+    Routes,
+    AboutController,
+    AboutService) {
 
-        var Feature = function() {
-            Base.call(this, 'about');
+    class Feature extends FeatureBase {
+
+        constructor() {
+            super('about');
             this.routes = Routes;
-        };
+        }
 
-        Feature.prototype = new Base();
+        execute() {
+            this.controller('AboutController', AboutController);
+            this.service('AboutService', AboutService);
+        }
+    }
 
-        Feature.prototype.constructor = Feature;
-
-        Feature.prototype.run = function() {
-            this.mod.controller('AboutController', AboutController);
-            this.mod.service('AboutService', AboutService);
-        };
-
-        return Feature;
-    });
-
-}(define));
+    return Feature;
+});

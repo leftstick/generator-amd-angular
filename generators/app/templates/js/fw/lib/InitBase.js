@@ -6,16 +6,18 @@
  *  @date    <%= answers.date %>
  *
  */
-(function(define) {
-    'use strict';
+'use strict';
 
-    define([], function() {
+define([], function() {
 
-        var InitBase = function() {};
+    class InitBase {
 
-        InitBase.prototype.run = function() {};
+        constructor(features) {
+            this.features = features;
+        }
 
-        return InitBase;
-    });
+        execute() {}
+    }
 
-}(define));
+    return InitBase;
+});

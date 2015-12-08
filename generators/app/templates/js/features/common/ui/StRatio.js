@@ -6,36 +6,31 @@
  *  @date    <%= answers.date %>
  *
  **/
-(function(define) {
-    'use strict';
+'use strict';
 
-    define(['lib/FeatureBase'], function(Base) {
+define(['lib/FeatureBase'], function(FeatureBase) {
 
-        var Feature = function() {
-            Base.call(this, 'StRatioModule');
-        };
+    class Feature extends FeatureBase {
 
-        Feature.prototype = new Base();
+        constructor() {
+            super('StRatioModule');
+        }
 
-        Feature.prototype.constructor = Feature;
-
-        Feature.prototype.run = function() {
-            var dir = function() {
-                return {
-                    restrict: 'A',
-                    link: function($scope, element, attr) {
-                        var ratio = +(attr.stRatio);
-                        element.css('width', ratio + '%');
-                    }
-                };
+        stRatio() {
+            return {
+                restrict: 'A',
+                link: function($scope, element, attr) {
+                    var ratio = +(attr.stRatio);
+                    element.css('width', ratio + '%');
+                }
             };
+        }
 
-            this.mod.directive('stRatio', [dir]);
-        };
+        execute() {
+            this.directive('stRatio', this.stRatio);
+        }
+    }
 
-        return Feature;
+    return Feature;
 
-    });
-
-
-})(define);
+});

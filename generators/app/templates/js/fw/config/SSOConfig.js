@@ -5,31 +5,26 @@
  *  @date    <%= answers.date %>
  *
  */
-(function(define) {
-    'use strict';
+'use strict';
 
-    define(['lib/ConfiguratorBase'], function(Base) {
+define(['lib/ConfiguratorBase'], function(ConfiguratorBase) {
 
-        var Configurator = function(features, app) {
-            Base.call(this, features, app);
-        };
+    class Configurator extends ConfiguratorBase {
+        constructor(features, app) {
+            super(features, app);
+        }
 
-        Configurator.prototype = new Base();
+        httpConfig($httpProvider) {
+            $httpProvider.defaults.headers.common.Accept = 'application/json;charset=utf-8';
+            $httpProvider.defaults.withCredentials = true;
+        }
 
-        Configurator.prototype.constructor = Configurator;
+        execute() {
+            this.httpConfig.$inject = ['$httpProvider'];
+            this.config(this.httpConfig);
+        }
+    }
 
-        Configurator.prototype.run = function() {
-            this.app.config([
-                '$httpProvider',
-                function($httpProvider) {
-                    $httpProvider.defaults.headers.common.Accept = 'application/json;charset=utf-8';
-                    $httpProvider.defaults.withCredentials = true;
-                }
-            ]);
-        };
+    return Configurator;
 
-        return Configurator;
-
-    });
-
-}(define));
+});

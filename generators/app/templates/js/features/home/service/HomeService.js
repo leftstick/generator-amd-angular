@@ -5,35 +5,27 @@
  *  @date    <%= answers.date %>
  *
  */
-(function(define) {
-    'use strict';
+'use strict';
 
-    /**
-     * Register the HomeService class with RequireJS
-     */
-    define([], function() {
+define([], function() {
 
-        /**
-         * @constructor
-         */
-        var HomeService = function($http, utils) {
+    var HomeService = function($http, utils) {
 
-            this.getStates = function() {
-                return $http.get(utils.getapi('/states'));
-            };
-
-            this.getMenus = function() {
-                return $http.get(utils.getapi('/menus'));
-            };
-
-            this.getDropdown = function() {
-                return $http.get(utils.getapi('/dropdown'));
-            };
-
+        this.getStates = function() {
+            return $http.get(utils.getApi('/states'));
         };
 
-        return ['$http', 'utils', HomeService];
+        this.getMenus = function() {
+            return $http.get(utils.getApi('/menus'));
+        };
 
-    });
+        this.getDropdown = function() {
+            return $http.get(utils.getApi('/dropdown'));
+        };
 
-})(define);
+    };
+
+    HomeService.$inject = ['$http', 'utils'];
+
+    return HomeService;
+});

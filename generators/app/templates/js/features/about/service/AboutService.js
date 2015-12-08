@@ -5,27 +5,20 @@
  *  @date    <%= answers.date %>
  *
  */
-(function(define) {
-    'use strict';
+'use strict';
 
-    /**
-     * Register the AboutService class with RequireJS
-     */
-    define([], function() {
+define([], function() {
 
-        /**
-         * @constructor
-         */
-        var AboutService = function($http, utils) {
+    var AboutService = function($http, utils) {
 
-            this.getDemoList = function() {
-                return $http.get(utils.getapi('/demolist'));
-            };
-
+        this.getDemoList = function() {
+            return $http.get(utils.getApi('/demolist'));
         };
 
-        return ['$http', 'utils', AboutService];
+    };
 
-    });
+    AboutService.$inject = ['$http', 'utils'];
 
-})(define);
+    return AboutService;
+
+});

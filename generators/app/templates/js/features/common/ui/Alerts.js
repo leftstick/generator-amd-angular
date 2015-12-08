@@ -5,65 +5,60 @@
  *  @date    <%= answers.date %>
  *
  */
-(function(define, doc) {
-    'use strict';
+'use strict';
 
-    define(['lib/FeatureBase', 'angular'], function(Base, angular) {
+define(['lib/FeatureBase', 'angular'], function(FeatureBase, angular) {
 
-        var TYPES = {
-            warning: 'warning',
-            error: 'error',
-            info: 'info',
-            success: 'success'
-        };
+    var element = angular.element;
 
-        var TIMEOUTS = {
-            warning: 3000,
-            error: 5000,
-            info: 3000,
-            success: 3000
-        };
+    var TYPES = {
+        warning: 'warning',
+        error: 'error',
+        info: 'info',
+        success: 'success'
+    };
 
-        var TITLES = {
-            warning: 'Warning',
-            error: 'Error',
-            info: 'Info',
-            success: 'Success'
-        };
+    var TIMEOUTS = {
+        warning: 3000,
+        error: 5000,
+        info: 3000,
+        success: 3000
+    };
 
-        var Feature = function() {
-            Base.call(this, 'Alerts');
-            this.$body = angular.element(doc.body);
-        };
+    var TITLES = {
+        warning: 'Warning',
+        error: 'Error',
+        info: 'Info',
+        success: 'Success'
+    };
 
-        Feature.prototype = new Base();
+    class Feature extends FeatureBase {
+        constructor() {
+            super('Alerts');
+            this.$body = element(document.body);
+        }
 
-        Feature.prototype.constructor = Feature;
-
-        Feature.prototype.beforeStart = function() {
+        beforeStart() {
             this.$body.append('<sweetnotifier></sweetnotifier>');
         };
 
-        Feature.prototype.run = function() {
-            this.mod.run([
-                'events',
-                'notifier',
-                function(events, notifier) {
+        alertEvent(events, notifier) {
+            events.on('alert', function(data) {
+                notifier.emit({
+                    type: TYPES[data.type],
+                    title: TITLES[data.type],
+                    content: data.message,
+                    timeout: TIMEOUTS[data.type]
+                });
+            });
+        }
 
-                    events.on('alert', function(data) {
-                        notifier.emit({
-                            type: TYPES[data.type],
-                            title: TITLES[data.type],
-                            content: data.message,
-                            timeout: TIMEOUTS[data.type]
-                        });
-                    });
-                }
-            ]);
-        };
+        execute() {
+            this.alertEvent.$inject = ['events', 'notifier'];
+            this.run(this.alertEvent);
+        }
+    }
 
-        return Feature;
+    return Feature;
 
-    });
-
-})(define, document);
+});

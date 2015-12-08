@@ -9,13 +9,8 @@
  *  @date    <%= answers.date %>
  *
  */
-(function(define) {
-    'use strict';
+'use strict';
 
-    define([
-        './Header'
-    ], function() {
-        return [].slice.call(arguments, 0);
-    });
-
-}(define));
+define(['./Header'], function() {
+    return [].slice.call(arguments);
+});

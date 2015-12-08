@@ -6,47 +6,39 @@
  *  @date    <%= answers.date %>
  *
  */
-(function(define, global) {
-    'use strict';
+'use strict';
 
-    define(['lib/InitBase', 'angular'], function(Base, angular) {
+define(['lib/InitBase', 'angular', 'etc/config'], function(InitBase, angular, config) {
 
+    var element = angular.element;
 
-        var Initializer = function(features, app) {
-            Base.call(this, features, app);
-            this.head = angular.element(global.document.head);
-            this.config = __config;
-        };
+    class Initializer extends InitBase {
+        constructor(features, app) {
+            super(features, app);
+            this.head = element(document.head);
+        }
 
-        Initializer.prototype = new Base();
-
-        Initializer.prototype.constructor = Initializer;
-
-        Initializer.prototype.title = function(t) {
-            var title = angular.element('<title></title>');
+        title(t) {
+            var title = element('<title></title>');
             title.text(t);
             this.head.append(title);
-        };
+        }
 
-        Initializer.prototype.base = function(attr) {
-            var base = angular.element('<base>');
+        base(attr) {
+            var base = element('<base>');
             base.attr(attr);
             this.head.find('base').remove();
             this.head.append(base);
-        };
+        }
 
-        Initializer.prototype.meta = function(attr) {
-            var meta = angular.element('<meta>');
+        meta(attr) {
+            var meta = element('<meta>');
             meta.attr(attr);
             this.head.append(meta);
-        };
+        }
 
-        Initializer.prototype.run = function() {
-            this.title(this.config.appname);
-            this.base({
-                href: '/' + (this.config.base ? this.config.base + '/' : '')
-            });
-
+        execute() {
+            this.title(config.appname);
             this.meta({'charset': 'utf-8'});
             this.meta({
                 'name': 'viewport',
@@ -65,10 +57,9 @@
                 'name': 'apple-mobile-web-app-capable',
                 'content': 'yes'
             });
-        };
+        }
+    }
 
-        return Initializer;
+    return Initializer;
 
-    });
-
-}(define, window));
+});

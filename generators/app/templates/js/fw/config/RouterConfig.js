@@ -7,62 +7,86 @@
  *  @date    <%= answers.date %>
  *
  */
-(function(define) {
-    'use strict';
+'use strict';
 
-    define(['lib/ConfiguratorBase', 'lodash'], function(Base, _) {
+define(['lib/ConfiguratorBase', 'lib/Pluck', 'lib/Omit'], function(ConfiguratorBase, pluck, omit) {
 
-        var Configurator = function(features, app) {
-            Base.call(this, features, app);
-            this.config = __config;
-        };
+    class Configurator extends ConfiguratorBase {
+        constructor(features, app) {
+            super(features, app);
+        }
 
-        Configurator.prototype = new Base();
+        routeConfig($locationProvider, $routeProvider){
+            //config each router
+            this.routes.forEach(function(ro) {
+                $routeProvider
+                    .when(ro.when, omit(ro, ['when']));
+            });
 
-        Configurator.prototype.constructor = Configurator;
+            //config default page
+            var defaultRouter = this.routes.filter(function(route) {
+                return route.isDefault;
+            })[0];
+            if (defaultRouter) {
+                $routeProvider.otherwise({
+                    redirectTo: defaultRouter.when
+                });
+            }
+            <% if (answers.pushState) { %>
+            $locationProvider.html5Mode({
+                enabled: true,
+                requireBase: true
+            }); <% } else { %>
+            $locationProvider.html5Mode(false); <% } %>
+        }
 
-        Configurator.prototype.run = function() {
+        execute() {
             if (!this.features || this.features.length === 0) {
                 console.warn('No features loaded');
                 return;
             }
 
-            var routes = _.chain(this.features)
-                .filter('routes')
-                .pluck('routes')
-                .flatten()
-                .value();
+            this.routes = this.features
+                .filter(function(feature) {
+                    return feature.routes && feature.routes.length > 0;
+                })
+                .map(function(feature) {
+                    return feature.routes;
+                })
+                .reduce(function(previous, current) {
+                    return previous.concat(current);
+                }, []);
 
-            this.app.constant('Routes', routes);
+            var defaultRoutes = this.routes.filter(function(route) {
+                return route.isDefault;
+            });
 
-            this.app.config(['$locationProvider', '$routeProvider',
-                function($locationProvider, $routeProvider) {
+            if (defaultRoutes.length === 0) {
+                console.warn('There is no any default route set. Try setting isDefault to the route you preferred');
+            } else if (defaultRoutes.length > 1) {
+                var defaultWhens = pluck(defaultRoutes, 'when');
+                console.warn('You have set [' + defaultRoutes.length + '] default routes, they are [' + defaultWhens.join(', ') + ']. Try to correct it');
+            }
 
-                    //config each router
-                    _.each(routes, function(ro) {
-                        $routeProvider
-                            .when(ro.when, _.omit(ro, ['when']));
-                    });
+            var routeWhens = pluck(this.routes, 'when').sort();
 
-                    //config default page
-                    var defaultRouter = _.find(routes, 'isDefault');
-                    if (defaultRouter) {
-                        $routeProvider.otherwise({
-                            redirectTo: defaultRouter.when
-                        });
-                    }
-                    <% if (answers.pushState) { %>
-                    $locationProvider.html5Mode({
-                        enabled: true,
-                        requireBase: true
-                    }); <% } else { %>
-                    $locationProvider.html5Mode(false); <% } %>
-
+            for (var i = 0; i < routeWhens.length - 1; i++) {
+                if (routeWhens[i] === routeWhens[i + 1]) {
+                    throw new Error('Duplicated Route: [ ' + routeWhens[i] + ' ]');
                 }
-            ]);
-        };
+            }
 
-        return Configurator;
-    });
+            this.constant('Routes', this.routes);
 
-}(define));
+            var routeConfig = this.routeConfig.bind(this);
+
+            routeConfig.$inject = [
+                '$locationProvider',
+                '$routeProvider'
+            ];
+            this.config(routeConfig);
+        }
+    }
+
+    return Configurator;
+});

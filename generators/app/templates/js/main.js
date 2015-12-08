@@ -5,89 +5,93 @@
  *  @date    <%= answers.date %>
  *
  */
-(function(define, require, doc) {
-    'use strict';
+'use strict';
 
-    define([
-        'lodash',
-        'angular',
-        'init/main',
-        'ext/main',
-        'config/main',
-        'service/main',
-        'features/main',
-        'splash-screen'
-    ], function(_, angular, Initializers, ext, Configurators, Services, Features, splash) {
+define([
+    'angular',
+    'init/main',
+    'ext/main',
+    'config/main',
+    'service/main',
+    'features/main',
+    'splash-screen'
+], function(angular, Initializers, Extensions, Configurators, Services, Features, Splash) {
 
-        require(['less/main.less']);
+    require(['less/main.less']);
 
-        var App = function() {
-            this.appName = 'require-angular-seed';
-            this.features = [];
-            _.each(Features, function(Feature) {
-                this.features.push(new Feature());
-            }, this);
-        };
+    var App = function() {
+        this.appName = '<%= answers.name %>';
+        this.features = [];
+        Features.forEach(function(Feature) {
+            this.features.push(new Feature());
+        }, this);
+    };
 
-        App.prototype.findDependencies = function() {
-            this.depends = _.clone(ext);
-            Array.prototype.push.apply(this.depends, _.chain(this.features).filter('export').pluck('export').value());
-        };
-
-        App.prototype.beforeStart = function() {
-            _.each(Initializers, function(Initializer) {
-                (new Initializer()).run();
+    App.prototype.findDependencies = function() {
+        this.depends = Extensions.slice(0);
+        var featureNames = this.features.filter(function(feature) {
+            return feature.export;
+        })
+            .map(function(feature) {
+                return feature.export;
             });
+        this.depends.push(...featureNames);
+        Array.prototype.push.apply(this.depends, featureNames);
+    };
 
-            _.each(this.features, function(feature) {
-                feature.beforeStart();
-            });
-        };
+    App.prototype.beforeStart = function() {
+        Initializers.forEach(function(Initializer) {
+            (new Initializer(this.features)).execute();
+        }, this);
 
-        App.prototype.createApp = function() {
-            _.each(this.features, function(feature) {
-                feature.run();
-            });
-            this.app = angular.module(this.appName, this.depends);
-        };
+        this.features.forEach(function(feature) {
+            feature.beforeStart();
+        });
+    };
 
-        App.prototype.configApp = function() {
-            _.each(Configurators, function(Configurator) {
-                (new Configurator(this.features, this.app)).run();
-            }, this);
-        };
+    App.prototype.createApp = function() {
+        this.features.forEach(function(feature) {
+            feature.execute();
+        });
+        this.app = angular.module(this.appName, this.depends);
+    };
 
-        App.prototype.registerService = function() {
-            _.each(Services, function(Service) {
-                (new Service(this.features, this.app)).run();
-            }, this);
-        };
+    App.prototype.configApp = function() {
+        Configurators.forEach(function(Configurator) {
+            (new Configurator(this.features, this.app)).execute();
+        }, this);
+    };
 
-        App.prototype.destroySplash = function() {
-            var _this = this;
-            splash.destroy();
-            setTimeout(function() {
-                if (splash.isRunning()) {
-                    _this.destroySplash();
-                }
-            }, 100);
-        };
+    App.prototype.registerService = function() {
+        Services.forEach(function(Service) {
+            (new Service(this.features, this.app)).execute();
+        }, this);
+    };
 
-        App.prototype.launch = function() {
-            angular.bootstrap(doc, [this.appName]);
-        };
+    App.prototype.destroySplash = function() {
+        var _this = this;
+        Splash.destroy();
+        require('splash-screen/splash.min.css').unuse();
+        setTimeout(function() {
+            if (Splash.isRunning()) {
+                _this.destroySplash();
+            }
+        }, 100);
+    };
 
-        App.prototype.run = function() {
-            this.findDependencies();
-            this.beforeStart();
-            this.createApp();
-            this.configApp();
-            this.registerService();
-            this.destroySplash();
-            this.launch();
-        };
+    App.prototype.launch = function() {
+        angular.bootstrap(document, [this.appName]);
+    };
 
-        return App;
-    });
+    App.prototype.run = function() {
+        this.findDependencies();
+        this.beforeStart();
+        this.createApp();
+        this.configApp();
+        this.registerService();
+        this.destroySplash();
+        this.launch();
+    };
 
-}(define, require, document));
+    return App;
+});

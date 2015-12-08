@@ -6,21 +6,29 @@
  *  @date    <%= answers.date %>
  *
  */
-(function(define) {
-    'use strict';
+'use strict';
 
-    define(['angular'], function(angular) {
+define(['angular'], function(angular) {
 
-        var FeatureBase = function(name) {
+    class FeatureBase {
+
+        constructor(name) {
             this.export = name;
             this.mod = angular.module(this.export, []);
-        };
 
-        FeatureBase.prototype.beforeStart = function() {};
+            this.controller = this.mod.controller;
+            this.factory = this.mod.factory;
+            this.service = this.mod.service;
+            this.directive = this.mod.directive;
+            this.filter = this.mod.filter;
+            this.config = this.mod.config;
+            this.run = this.mod.run;
+        }
 
-        FeatureBase.prototype.run = function() {};
+        beforeStart() {}
 
-        return FeatureBase;
-    });
+        execute() {}
+    }
 
-}(define));
+    return FeatureBase;
+});

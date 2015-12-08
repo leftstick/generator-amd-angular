@@ -5,37 +5,33 @@
  *  @date    <%= answers.date %>
  *
  */
-(function(define) {
-    'use strict';
-    /**
-     * Register the AboutController class with RequireJS
-     */
-    define([], function() {
+'use strict';
 
-        /**
-         * @constructor
-         */
-        var AboutController = function($scope, AboutService, events) {
+define([], function() {
 
+    var AboutController = function($scope, AboutService, events) {
 
-            $scope.showSpinner = true;
+        $scope.showSpinner = true;
 
-            AboutService.getDemoList()
-                .success(function(data) {
-                    $scope.showSpinner = false;
-                    $scope.originDemolist = data;
-                    $scope.demolist = [].concat($scope.originDemolist);
-                }).error(function(err) {
-                    events.emit('error', {
-                        content: err
-                    });
-                });
+        AboutService.getDemoList()
+            .success(function(data) {
+                $scope.showSpinner = false;
+                $scope.originDemolist = data;
+                $scope.demolist = [].concat($scope.originDemolist);
+            })
+            .error(function(err) {
+                events.emit('error', {content: err});
+            });
 
-            $scope.$on('$destroy', function() {});
-        };
+        $scope.$on('$destroy', function() {});
+    };
 
-        return ['$scope', 'AboutService', 'events', AboutController];
+    AboutController.$inject = [
+        '$scope',
+        'AboutService',
+        'events'
+    ];
 
-    });
+    return AboutController;
 
-})(define);
+});
