@@ -11,7 +11,7 @@ Yeoman generator for angularjs based application with amd module
 ## Prerequisites ##
 
 1. Install [yeoman](http://yeoman.io/): `npm install -g yo`
-2. Install [bower](http://bower.io/): `npm install -g bower`
+2. Install [gulp](https://www.npmjs.com/package/gulp): `npm install -g gulp`
 3. Install __this__: `npm install -g generator-amd-angular`
 
 > prepend with `sudo` if you are running on `*nix` OS
