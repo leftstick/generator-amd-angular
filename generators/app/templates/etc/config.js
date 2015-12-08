@@ -6,10 +6,10 @@
  *  @date    <%= answers.date %>
  *
  **/
-(function(global) {
-    'use strict';
+'use strict';
 
-    global.__config = {
+define([], function() {
+    return {
         'appname': '<%= answers.name %>',
         'base': '',
         'version': '1.0.0',
@@ -17,5 +17,4 @@
         'protocol': 'https://raw.githubusercontent.com/leftstick/generator-amd-angular/master/LICENSE',
         'api': '/mock'
     };
-
-}(window));
+});
