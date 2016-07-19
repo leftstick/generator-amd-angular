@@ -6,13 +6,6 @@
  *  @date    <%= answers.date %>
  *
  */
-'use strict';
-
-define([
-    './AppConfig',
-    './NotifierConfig',
-    './RouterConfig',
-    './SSOConfig'
-], function() {
-    return [].slice.call(arguments);
+define(['./RouterConfig', './SSOConfig'], function(...confs) {
+    return confs;
 });

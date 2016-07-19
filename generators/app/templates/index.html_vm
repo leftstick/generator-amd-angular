@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <% if (htmlWebpackPlugin.options.pushState) { %><base href="/"><% } %>
+    </head>
+    <body>
+
+        <div ng-view autoscroll="true"></div>
+
+    </body>
+</html>

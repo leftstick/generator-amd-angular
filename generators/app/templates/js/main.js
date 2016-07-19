@@ -17,26 +17,21 @@ define([
     'splash-screen'
 ], function(angular, Initializers, Extensions, Configurators, Services, Features, Splash) {
 
-    require(['less/main.less']);
-
     var App = function() {
         this.appName = '<%= answers.name %>';
-        this.features = [];
         Features.forEach(function(Feature) {
-            this.features.push(new Feature());
-        }, this);
+            this.push(new Feature());
+        }, this.features = []);
     };
 
     App.prototype.findDependencies = function() {
         this.depends = Extensions.slice(0);
-        var featureNames = this.features.filter(function(feature) {
-            return feature.export;
-        })
-            .map(function(feature) {
-                return feature.export;
-            });
+
+        var featureNames = this.features
+            .filter(feature => feature.export)
+            .map(feature => feature.export);
+
         this.depends.push(...featureNames);
-        Array.prototype.push.apply(this.depends, featureNames);
     };
 
     App.prototype.beforeStart = function() {
@@ -44,15 +39,12 @@ define([
             (new Initializer(this.features)).execute();
         }, this);
 
-        this.features.forEach(function(feature) {
-            feature.beforeStart();
-        });
+        this.features.forEach(feature => feature.beforeStart());
     };
 
     App.prototype.createApp = function() {
-        this.features.forEach(function(feature) {
-            feature.execute();
-        });
+        this.features.forEach(feature => feature.execute());
+
         this.app = angular.module(this.appName, this.depends);
     };
 
@@ -70,10 +62,10 @@ define([
 
     App.prototype.destroySplash = function() {
         var _this = this;
-        Splash.destroy();
-        require('splash-screen/splash.min.css').unuse();
+        Splash.Splash.destroy();
+        require('splash-screen/dist/splash.min.css').unuse();
         setTimeout(function() {
-            if (Splash.isRunning()) {
+            if (Splash.Splash.isRunning()) {
                 _this.destroySplash();
             }
         }, 100);

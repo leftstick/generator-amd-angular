@@ -5,19 +5,6 @@
  *  @date    <%= answers.date %>
  *
  */
-'use strict';
-
-define([
-    './Alerts',
-    './Autofocus',
-    './Confirm',
-    './Error',
-    './Footer',
-    './Info',
-    './Modal',
-    './RouteIndicator',
-    './StRatio',
-    './TopNavbar'
-], function() {
-    return [].slice.call(arguments);
+define(['./Autofocus', './RouteIndicator'], function(...uis) {
+    return uis;
 });

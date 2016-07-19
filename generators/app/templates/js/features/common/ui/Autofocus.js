@@ -6,17 +6,14 @@
  *  @date    <%= answers.date %>
  *
  */
-'use strict';
-
 define(['lib/FeatureBase'], function(FeatureBase) {
-
     class Feature extends FeatureBase {
 
         constructor() {
             super('AutofocusModule');
         }
 
-        autoFocus() {
+        _autoFocus() {
             return {
                 restrict: 'A',
                 link: function($scope, element) {
@@ -26,10 +23,9 @@ define(['lib/FeatureBase'], function(FeatureBase) {
         }
 
         execute() {
-            this.directive('autofocus', this.autoFocus);
+            this.directive('autofocus', this._autoFocus);
         }
     }
 
     return Feature;
-
 });

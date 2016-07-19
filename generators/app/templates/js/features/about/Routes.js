@@ -6,8 +6,6 @@
  *  @date    <%= answers.date %>
  *
  */
-'use strict';
-
 define(['./partials/about.html'], function(tpl) {
     return [
         {
@@ -15,6 +13,7 @@ define(['./partials/about.html'], function(tpl) {
             isDefault: false,
             when: '/about',
             controller: 'AboutController',
+            controllerAs: 'about',
             template: tpl
         }
     ];

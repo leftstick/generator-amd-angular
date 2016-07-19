@@ -8,13 +8,13 @@
  */
 'use strict';
 
-define(['lib/InitBase', 'angular', 'etc/config'], function(InitBase, angular, config) {
+define(['lib/InitBase', 'angular', 'etc/config'], function(InitBase, angular, __config) {
 
     var element = angular.element;
 
     class Initializer extends InitBase {
-        constructor(features, app) {
-            super(features, app);
+        constructor(features) {
+            super(features);
             this.head = element(document.head);
         }
 
@@ -24,13 +24,6 @@ define(['lib/InitBase', 'angular', 'etc/config'], function(InitBase, angular, co
             this.head.append(title);
         }
 
-        base(attr) {
-            var base = element('<base>');
-            base.attr(attr);
-            this.head.find('base').remove();
-            this.head.append(base);
-        }
-
         meta(attr) {
             var meta = element('<meta>');
             meta.attr(attr);
@@ -38,7 +31,7 @@ define(['lib/InitBase', 'angular', 'etc/config'], function(InitBase, angular, co
         }
 
         execute() {
-            this.title(config.appname);
+            this.title(__config.appname);
             this.meta({'charset': 'utf-8'});
             this.meta({
                 'name': 'viewport',

@@ -9,10 +9,12 @@ module.exports = {
     },
     output: {
         path: path.resolve(__dirname, 'build'),
-        filename: '[hash].[name].bundle.js',
-        chunkFilename: '[hash].[id].bundle.js',
+        filename: '[name].bundle.js',
+        chunkFilename: '[id].bundle.js',
         publicPath: '/'
     },
+    debug: true,
+    devtool: 'source-map',
     module: {
         loaders: [
             {
@@ -47,12 +49,7 @@ module.exports = {
         ]
     },
     plugins: [
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false
-            }
-        }),
-        new webpack.optimize.CommonsChunkPlugin('[hash].common.bundle.js'),
+        new webpack.optimize.CommonsChunkPlugin('common.bundle.js'),
         new HtmlWebpackPlugin({
             pushState: <%= answers.pushState %>,
             filename: 'index.html',

@@ -9,8 +9,6 @@
  *  @date    <%= answers.date %>
  *
  */
-'use strict';
-
-define(['./Header'], function() {
-    return [].slice.call(arguments);
+define(['./Header', './Validator'], function(...inits) {
+    return inits;
 });

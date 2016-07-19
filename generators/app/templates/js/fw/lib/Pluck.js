@@ -5,8 +5,6 @@
  *  @date    <%= answers.date %>
  *
  */
-'use strict';
-
 define(['angular'], function(angular) {
 
     var isArray = angular.isArray;

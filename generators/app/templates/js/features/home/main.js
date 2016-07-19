@@ -14,13 +14,11 @@ define([
     'lib/FeatureBase',
     './Routes',
     './controller/HomeController',
-    './service/HomeService',
-    './partials/custom.html'
+    './service/HomeService'
 ], function(FeatureBase,
     Routes,
     HomeController,
-    HomeService,
-    customTpl) {
+    HomeService) {
 
     class Feature extends FeatureBase {
 
@@ -32,12 +30,6 @@ define([
         execute() {
             this.controller('HomeController', HomeController);
             this.service('HomeService', HomeService);
-            this.run([
-                '$templateCache',
-                function($templateCache) {
-                    $templateCache.put('customTpl', customTpl);
-                }
-            ]);
         }
     }
 

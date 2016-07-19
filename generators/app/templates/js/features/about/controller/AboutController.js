@@ -5,32 +5,24 @@
  *  @date    <%= answers.date %>
  *
  */
-'use strict';
-
 define([], function() {
 
-    var AboutController = function($scope, AboutService, events) {
+    class AboutController {
 
-        $scope.showSpinner = true;
+        /*@ngInject*/
+        constructor($scope) {
+            this.$scope = $scope;
 
-        AboutService.getDemoList()
-            .success(function(data) {
-                $scope.showSpinner = false;
-                $scope.originDemolist = data;
-                $scope.demolist = [].concat($scope.originDemolist);
-            })
-            .error(function(err) {
-                events.emit('error', {content: err});
-            });
+            this._init_();
+            this._destroy_();
+        }
 
-        $scope.$on('$destroy', function() {});
-    };
+        _init_() {}
 
-    AboutController.$inject = [
-        '$scope',
-        'AboutService',
-        'events'
-    ];
+        _destroy_() {
+            this.$scope.$on('$destroy', function() {});
+        }
+    }
 
     return AboutController;
 

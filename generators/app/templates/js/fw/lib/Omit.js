@@ -6,12 +6,9 @@
  *  @date    <%= answers.date %>
  *
  */
-'use strict';
-
 define(['angular'], function(angular) {
-    var isObject = angular.isObject;
-    var isArray = angular.isArray;
-    var isString = angular.isString;
+
+    let {isObject, isArray, isString} = angular;
 
     var clone = function(obj) {
         if (typeof obj !== 'object' || !obj) {

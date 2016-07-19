@@ -6,15 +6,15 @@
  *  @date    <%= answers.date %>
  *
  */
-'use strict';
-
 define(['angular'], function(angular) {
+
+    var module = angular.module;
 
     class FeatureBase {
 
         constructor(name) {
             this.export = name;
-            this.mod = angular.module(this.export, []);
+            this.mod = module(this.export, []);
 
             this.controller = this.mod.controller;
             this.factory = this.mod.factory;

@@ -6,8 +6,6 @@
  *  @date    <%= answers.date %>
  *
  */
-'use strict';
-
-define(['./ui/main'], function(ui) {
-    return ui;
+define(['./ui/main', './logical/main'], function(ui, logical) {
+    return [...ui, ...logical];
 });

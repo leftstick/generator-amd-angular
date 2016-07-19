@@ -6,8 +6,6 @@
  *  @date    <%= answers.date %>
  *
  */
-'use strict';
-
 define([], function() {
 
     class InitBase {

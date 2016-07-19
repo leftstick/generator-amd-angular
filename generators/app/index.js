@@ -60,7 +60,7 @@ var gen = generators.Base.extend({
                 type: 'confirm',
                 name: 'pushState',
                 message: 'Use html5 mode?',
-                default: true
+                default: false
             },
             {
                 type: 'list',
@@ -71,13 +71,14 @@ var gen = generators.Base.extend({
                     'https://registry.npmjs.org'
                 ]
             }
-        ], function(answers) {
-            require('date-util');
-            this.answers = answers;
-            this.answers.date = new Date().format('mmm d, yyyy');
-            this.obj = {answers: this.answers};
-            done();
-        }.bind(this));
+        ])
+            .then(function(answers) {
+                require('date-util');
+                self.answers = answers;
+                self.answers.date = new Date().format('mmm d, yyyy');
+                self.obj = {answers: self.answers};
+                done();
+            });
     },
     configuring: function() {
         var path = require('path');
@@ -104,13 +105,11 @@ var gen = generators.Base.extend({
                 interpolate: /<%=([\s\S]+?)%>/g
             })(self.obj);
         });
-        self.directory(self.templatePath('less'), self.destinationPath('less'));
-        self.directory(self.templatePath('mock'), self.destinationPath('mock'));
+        self.directory(self.templatePath('css'), self.destinationPath('css'));
         self.copy(self.templatePath('gitignore'), self.destinationPath('.gitignore'));
-        self.fs.copyTpl(self.templatePath('index.html'), self.destinationPath('index.html'), self.obj);
-        self.copy(self.templatePath('gulpfile.js'), self.destinationPath('gulpfile.js'));
+        self.fs.copy(self.templatePath('index.html_vm'), self.destinationPath('index.html_vm'));
         self.fs.copyTpl(self.templatePath('package.json_vm'), self.destinationPath('package.json'), self.obj);
-        self.copy(self.templatePath('webpack.config.dev.js'), self.destinationPath('webpack.config.dev.js'));
+        self.copy(self.templatePath('webpack.config.js'), self.destinationPath('webpack.config.js'));
         self.copy(self.templatePath('webpack.config.prod.js'), self.destinationPath('webpack.config.prod.js'));
     },
     install: function() {

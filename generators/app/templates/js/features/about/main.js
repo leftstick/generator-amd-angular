@@ -8,17 +8,13 @@
  *
  * ******************************************************************************************************
  */
-'use strict';
-
 define([
     'lib/FeatureBase',
     './Routes',
-    './controller/AboutController',
-    './service/AboutService'
+    './controller/AboutController'
 ], function(FeatureBase,
     Routes,
-    AboutController,
-    AboutService) {
+    AboutController) {
 
     class Feature extends FeatureBase {
 
@@ -29,7 +25,6 @@ define([
 
         execute() {
             this.controller('AboutController', AboutController);
-            this.service('AboutService', AboutService);
         }
     }
 

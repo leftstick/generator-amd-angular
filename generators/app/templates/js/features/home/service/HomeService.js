@@ -5,27 +5,35 @@
  *  @date    <%= answers.date %>
  *
  */
-'use strict';
-
 define([], function() {
 
-    var HomeService = function($http, utils) {
+    class HomeService {
 
-        this.getStates = function() {
-            return $http.get(utils.getApi('/states'));
-        };
+        /*@ngInject*/
+        constructor($http, utils) {
+            this.$http = $http;
+            this.utils = utils;
+        }
 
-        this.getMenus = function() {
-            return $http.get(utils.getApi('/menus'));
-        };
+        getInitTodos() {
+            return Promise.resolve([
+                {
+                    finished: true,
+                    txt: 'Learn JavaScript'
+                },
+                {
+                    txt: 'Learn AngularJS'
+                },
+                {
+                    txt: 'Learn webpack'
+                },
+                {
+                    txt: 'Learn node'
+                }
+            ]);
+        }
 
-        this.getDropdown = function() {
-            return $http.get(utils.getApi('/dropdown'));
-        };
-
-    };
-
-    HomeService.$inject = ['$http', 'utils'];
+    }
 
     return HomeService;
 });

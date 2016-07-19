@@ -5,8 +5,6 @@
  *  @date    <%= answers.date %>
  *
  */
-'use strict';
-
 define(['lib/ConfiguratorBase'], function(ConfiguratorBase) {
 
     class Configurator extends ConfiguratorBase {
@@ -14,14 +12,15 @@ define(['lib/ConfiguratorBase'], function(ConfiguratorBase) {
             super(features, app);
         }
 
-        httpConfig($httpProvider) {
+        _httpConfig($httpProvider) {
+            'ngInject';
+
             $httpProvider.defaults.headers.common.Accept = 'application/json;charset=utf-8';
             $httpProvider.defaults.withCredentials = true;
         }
 
         execute() {
-            this.httpConfig.$inject = ['$httpProvider'];
-            this.config(this.httpConfig);
+            this.config(this._httpConfig);
         }
     }
 

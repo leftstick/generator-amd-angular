@@ -9,12 +9,5 @@
 'use strict';
 
 define([], function() {
-    return {
-        'appname': '<%= answers.name %>',
-        'base': '',
-        'version': '1.0.0',
-        'icp': 'ICP here',
-        'protocol': 'https://raw.githubusercontent.com/leftstick/generator-amd-angular/master/LICENSE',
-        'api': '/mock'
-    };
+    return {appname: '<%= answers.name %>', version: '1.0.0'};
 });
